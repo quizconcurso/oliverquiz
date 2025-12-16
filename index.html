@@ -1,89 +1,365 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Quiz Lei de Tortura</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module">
-      import React from "https://esm.sh/react";
-      import ReactDOM from "https://esm.sh/react-dom/client";
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado PPMG - Lei de Tortura</title>
+    
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-      const baseQuestions = [
-        {
-          correct: "B",
-          alternatives: {
-            A: "Apenas violência física extrema",
-            B: "Sofrimento físico ou mental, com finalidade específica",
-            C: "Qualquer abuso de autoridade",
-            D: "Somente dor psicológica"
-          },
-          explanation:
-            "A Lei 9.455/97 exige sofrimento físico ou mental + finalidade específica."
+    <style>
+        :root {
+            --primary: #2563eb;
+            --background: #f3f4f6;
+            --card: #ffffff;
+            --text: #1f2937;
+            --success: #10b981;
+            --error: #ef4444;
         }
-      ];
 
-      function shuffle(a) {
-        return [...a].sort(() => Math.random() - 0.5);
-      }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
 
-      function App() {
-        const [qs, setQs] = React.useState(
-          shuffle([...baseQuestions, ...baseQuestions, ...baseQuestions]).slice(0, 20)
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2 { text-align: center; color: #111827; }
+        
+        /* Barra de Progresso */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        /* Questões */
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover { border-color: var(--primary); background: #eff6ff; }
+        .option-btn.selected { border-color: var(--primary); background: #dbeafe; font-weight: bold; }
+
+        .nav-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button.action-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        button.action-btn:hover { background-color: #1d4ed8; }
+        button.action-btn:disabled { background-color: #9ca3af; cursor: not-allowed; }
+
+        /* Estilos do Resultado */
+        .result-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .result-card.correct { border-left: 5px solid var(--success); }
+        .result-card.wrong { border-left: 5px solid var(--error); }
+        
+        .explanation {
+            background-color: #f8fafc;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            border-left: 3px solid #64748b;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+        }
+        .badge-success { background-color: var(--success); }
+        .badge-error { background-color: var(--error); }
+
+    </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+    // --- BANCO DE QUESTÕES (Aqui você adiciona quantas quiser) ---
+    // DICA: Para "inovar", adicione 50 ou 100 questões aqui. 
+    // O sistema vai sortear 20 diferentes a cada acesso.
+    const questionBank = [
+        {
+            id: 1,
+            question: "Sobre a Lei de Tortura (Lei 9.455/97), assinale a alternativa correta:",
+            options: [
+                "Aplica-se apenas a agentes públicos.",
+                "O crime de tortura é afiançável.",
+                "Constranger alguém com emprego de violência, causando sofrimento físico ou mental, configura tortura.",
+                "Apenas a dor física é considerada tortura, a psicológica é crime de ameaça.",
+                "A condenação não acarreta a perda do cargo público automaticamente."
+            ],
+            correctIndex: 2, // 0 é A, 1 é B, 2 é C...
+            explanation: "Correto. O Art. 1º define tortura como constranger alguém com violência ou grave ameaça, causando sofrimento físico ou mental. É crime inafiançável e a perda do cargo é efeito automático."
+        },
+        {
+            id: 2,
+            question: "Se o crime de tortura resulta em morte, a pena é de:",
+            options: [
+                "Reclusão de 2 a 8 anos.",
+                "Reclusão de 4 a 10 anos.",
+                "Reclusão de 8 a 16 anos.",
+                "Reclusão de 12 a 30 anos.",
+                "Detenção de 1 a 3 anos."
+            ],
+            correctIndex: 2,
+            explanation: "Se resulta morte, a tortura é qualificada e a pena passa a ser de reclusão de 8 a 16 anos (Art. 1º, § 3º)."
+        },
+        {
+            id: 3,
+            question: "Aquele que se omite diante da tortura, quando tinha o dever de evitá-la, responde por:",
+            options: [
+                "Coautoria no crime de tortura.",
+                "Crime de prevaricação.",
+                "Tortura na modalidade omissiva, com a mesma pena do executor.",
+                "Tortura na modalidade omissiva, com pena de detenção de 1 a 4 anos.",
+                "Não responde por crime algum."
+            ],
+            correctIndex: 3,
+            explanation: "A omissão na tortura é punida de forma mais branda (Detenção de 1 a 4 anos), conforme o Art. 1º, § 2º."
+        },
+        // ... ADICIONE MAIS QUESTÕES AQUI SEGUINDO O MODELO ACIMA ...
+        // Vou duplicar as questões acima apenas para simular o banco de dados cheio
+        { id: 4, question: "Variação 1: Tortura Prova - Qual a finalidade?", options: ["Lazer", "Obter confissão", "Nenhuma", "Apenas dor", "Vingança"], correctIndex: 1, explanation: "Tortura-prova visa obter informação ou confissão." },
+        { id: 5, question: "Variação 2: Aumenta a pena se a vítima é?", options: ["Homem adulto", "Gestante", "Rico", "Político", "Estrangeiro"], correctIndex: 1, explanation: "Aumenta de 1/6 a 1/3 se cometido contra gestante, criança, adolescente, idoso ou deficiente." },
+    ];
+
+    // --- LÓGICA DO SISTEMA ---
+
+    function shuffleArray(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    function App() {
+        // Estados
+        const [questions, setQuestions] = React.useState([]);
+        const [currentQIndex, setCurrentQIndex] = React.useState(0);
+        const [userAnswers, setUserAnswers] = React.useState({});
+        const [finished, setFinished] = React.useState(false);
+        const [score, setScore] = React.useState(0);
+
+        // Ao carregar, sorteia 20 questões (ou menos se o banco for pequeno)
+        React.useEffect(() => {
+            // Duplicando o banco só para testar se tiver poucas questões, no seu caso use o banco real
+            const fullBank = [...questionBank, ...questionBank, ...questionBank, ...questionBank]; 
+            const shuffled = shuffleArray([...fullBank]);
+            setQuestions(shuffled.slice(0, 20)); // PEGA 20 QUESTÕES
+        }, []);
+
+        const handleOptionSelect = (optionIndex) => {
+            setUserAnswers({
+                ...userAnswers,
+                [currentQIndex]: optionIndex
+            });
+        };
+
+        const nextQuestion = () => {
+            if (currentQIndex < questions.length - 1) {
+                setCurrentQIndex(currentQIndex + 1);
+            } else {
+                finishQuiz();
+            }
+        };
+
+        const prevQuestion = () => {
+            if (currentQIndex > 0) {
+                setCurrentQIndex(currentQIndex - 1);
+            }
+        };
+
+        const finishQuiz = () => {
+            let acertos = 0;
+            questions.forEach((q, index) => {
+                if (userAnswers[index] === q.correctIndex) {
+                    acertos++;
+                }
+            });
+            setScore(acertos);
+            setFinished(true);
+        };
+
+        const restart = () => {
+            window.location.reload();
+        };
+
+        if (questions.length === 0) return <div className="container">Carregando simulado...</div>;
+
+        // TELA DE RESULTADO
+        if (finished) {
+            const percentage = (score / questions.length) * 100;
+            return (
+                <div className="container">
+                    <h2>Resultado Final</h2>
+                    <div style={{textAlign: 'center', marginBottom: '30px'}}>
+                        <h1 style={{fontSize: '3rem', margin: '10px 0', color: percentage >= 70 ? '#10b981' : '#ef4444'}}>
+                            {score} / {questions.length}
+                        </h1>
+                        <p>Você acertou {percentage}% da prova.</p>
+                        <button className="action-btn" onClick={restart}>Novo Simulado (Gerar novas questões)</button>
+                    </div>
+
+                    <h3>Gabarito Comentado:</h3>
+                    {questions.map((q, index) => {
+                        const userAnswer = userAnswers[index];
+                        const isCorrect = userAnswer === q.correctIndex;
+                        
+                        return (
+                            <div key={index} className={`result-card ${isCorrect ? 'correct' : 'wrong'}`}>
+                                <div className="badge" className={isCorrect ? 'badge badge-success' : 'badge badge-error'}>
+                                    {isCorrect ? 'ACERTOU' : 'ERROU'}
+                                </div>
+                                <p style={{fontWeight: 'bold', margin: '10px 0'}}>Questão {index + 1}: {q.question}</p>
+                                
+                                <p style={{color: isCorrect ? 'green' : 'red'}}>
+                                    Sua resposta: {q.options[userAnswer] || "Não respondeu"}
+                                </p>
+                                {!isCorrect && (
+                                    <p style={{color: 'green', fontWeight: 'bold'}}>
+                                        Correta: {q.options[q.correctIndex]}
+                                    </p>
+                                )}
+                                
+                                <div className="explanation">
+                                    <strong>Por que?</strong> {q.explanation}
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+            );
+        }
+
+        // TELA DO QUIZ (QUESTÃO ATUAL)
+        const currentQ = questions[currentQIndex];
+        const progress = ((currentQIndex + 1) / questions.length) * 100;
+
+        return (
+            <div className="container">
+                <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                    <span>Questão {currentQIndex + 1} de {questions.length}</span>
+                    <span style={{fontSize: '0.9rem', color: '#6b7280'}}>Direito Penal</span>
+                </div>
+                
+                <div className="progress-bar">
+                    <div className="progress-fill" style={{width: `${progress}%`}}></div>
+                </div>
+
+                <div className="question-text">
+                    {currentQ.question}
+                </div>
+
+                <div className="options-grid">
+                    {currentQ.options.map((opt, i) => (
+                        <button 
+                            key={i}
+                            className={`option-btn ${userAnswers[currentQIndex] === i ? 'selected' : ''}`}
+                            onClick={() => handleOptionSelect(i)}
+                        >
+                            <span style={{fontWeight:'bold', marginRight:'10px'}}>{['A','B','C','D','E'][i]})</span> 
+                            {opt}
+                        </button>
+                    ))}
+                </div>
+
+                <div className="nav-buttons">
+                    <button 
+                        className="action-btn" 
+                        style={{background: '#9ca3af', visibility: currentQIndex === 0 ? 'hidden' : 'visible'}}
+                        onClick={prevQuestion}
+                    >
+                        Anterior
+                    </button>
+                    
+                    <button 
+                        className="action-btn"
+                        onClick={nextQuestion}
+                        disabled={userAnswers[currentQIndex] === undefined}
+                    >
+                        {currentQIndex === questions.length - 1 ? 'Finalizar e Ver Nota' : 'Próxima'}
+                    </button>
+                </div>
+            </div>
         );
-        const [ans, setAns] = React.useState({});
-        const [done, setDone] = React.useState(false);
+    }
 
-        const score = qs.filter((q, i) => ans[i] === q.correct).length;
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
 
-        return React.createElement(
-          "div",
-          { style: { maxWidth: 800, margin: "auto", fontFamily: "Arial" } },
-          React.createElement("h2", null, "Quiz – Lei de Tortura"),
-          !done &&
-            qs.map((q, i) =>
-              React.createElement(
-                "div",
-                { key: i, style: { border: "1px solid #ccc", padding: 10, marginBottom: 10 } },
-                Object.entries(q.alternatives).map(([k, v]) =>
-                  React.createElement(
-                    "button",
-                    {
-                      key: k,
-                      onClick: () => setAns({ ...ans, [i]: k }),
-                      style: {
-                        display: "block",
-                        margin: 5,
-                        background: ans[i] === k ? "#add8e6" : ""
-                      }
-                    },
-                    k + ") " + v
-                  )
-                )
-              )
-            ),
-          !done &&
-            Object.keys(ans).length === qs.length &&
-            React.createElement(
-              "button",
-              { onClick: () => setDone(true) },
-              "Finalizar"
-            ),
-          done &&
-            React.createElement(
-              "div",
-              null,
-              React.createElement("h3", null, `Resultado: ${score}/20`),
-              React.createElement(
-                "button",
-                { onClick: () => window.location.reload() },
-                "Fazer novamente"
-              )
-            )
-        );
-      }
+</script>
 
-      ReactDOM.createRoot(document.body).render(React.createElement(App));
-    </script>
-  </head>
-  <body></body>
+</body>
 </html>
