@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quiz Lei de Tortura</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module">
+      import React from "https://esm.sh/react";
+      import ReactDOM from "https://esm.sh/react-dom/client";
+
+      const baseQuestions = [
+        {
+          correct: "B",
+          alternatives: {
+            A: "Apenas violência física extrema",
+            B: "Sofrimento físico ou mental, com finalidade específica",
+            C: "Qualquer abuso de autoridade",
+            D: "Somente dor psicológica"
+          },
+          explanation:
+            "A Lei 9.455/97 exige sofrimento físico ou mental + finalidade específica."
+        }
+      ];
+
+      function shuffle(a) {
+        return [...a].sort(() => Math.random() - 0.5);
+      }
+
+      function App() {
+        const [qs, setQs] = React.useState(
+          shuffle([...baseQuestions, ...baseQuestions, ...baseQuestions]).slice(0, 20)
+        );
+        const [ans, setAns] = React.useState({});
+        const [done, setDone] = React.useState(false);
+
+        const score = qs.filter((q, i) => ans[i] === q.correct).length;
+
+        return React.createElement(
+          "div",
+          { style: { maxWidth: 800, margin: "auto", fontFamily: "Arial" } },
+          React.createElement("h2", null, "Quiz – Lei de Tortura"),
+          !done &&
+            qs.map((q, i) =>
+              React.createElement(
+                "div",
+                { key: i, style: { border: "1px solid #ccc", padding: 10, marginBottom: 10 } },
+                Object.entries(q.alternatives).map(([k, v]) =>
+                  React.createElement(
+                    "button",
+                    {
+                      key: k,
+                      onClick: () => setAns({ ...ans, [i]: k }),
+                      style: {
+                        display: "block",
+                        margin: 5,
+                        background: ans[i] === k ? "#add8e6" : ""
+                      }
+                    },
+                    k + ") " + v
+                  )
+                )
+              )
+            ),
+          !done &&
+            Object.keys(ans).length === qs.length &&
+            React.createElement(
+              "button",
+              { onClick: () => setDone(true) },
+              "Finalizar"
+            ),
+          done &&
+            React.createElement(
+              "div",
+              null,
+              React.createElement("h3", null, `Resultado: ${score}/20`),
+              React.createElement(
+                "button",
+                { onClick: () => window.location.reload() },
+                "Fazer novamente"
+              )
+            )
+        );
+      }
+
+      ReactDOM.createRoot(document.body).render(React.createElement(App));
+    </script>
+  </head>
+  <body></body>
+</html>
