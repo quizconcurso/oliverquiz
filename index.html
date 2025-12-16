@@ -3,363 +3,1286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado PPMG - Lei de Tortura</title>
+    <title>Quiz Lei de Tortura 9.455/97 - Concursos</title>
     
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             --primary: #2563eb;
-            --background: #f3f4f6;
-            --card: #ffffff;
-            --text: #1f2937;
+            --secondary: #1e293b;
             --success: #10b981;
             --error: #ef4444;
+            --warning: #f59e0b;
+            --background: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border: #334155;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--background);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--background) 0%, #1e293b 100%);
             color: var(--text);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
             min-height: 100vh;
+            padding: 20px;
         }
 
         .container {
-            width: 100%;
-            max-width: 800px;
+            max-width: 900px;
+            margin: 0 auto;
             background: var(--card);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid var(--border);
         }
 
-        h1, h2 { text-align: center; color: #111827; }
-        
-        /* Barra de Progresso */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1d4ed8 100%);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .progress-container {
+            margin-bottom: 2rem;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .question-counter {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
         .progress-bar {
             width: 100%;
             height: 8px;
-            background-color: #e5e7eb;
+            background: var(--background);
             border-radius: 4px;
-            margin-bottom: 20px;
             overflow: hidden;
         }
+
         .progress-fill {
             height: 100%;
-            background-color: var(--primary);
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, var(--primary), #3b82f6);
+            border-radius: 4px;
+            transition: width 0.5s ease;
         }
 
-        /* Questões */
+        .question-card {
+            background: var(--background);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+        }
+
         .question-text {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 600;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option-button {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .option-button:hover {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .option-button.selected {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.2);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .option-button.selected .option-letter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .nav-button:disabled {
+            background: var(--border);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .nav-button.secondary {
+            background: var(--border);
+            color: var(--text-secondary);
+        }
+
+        .nav-button.secondary:hover {
+            background: #475569;
+            color: var(--text);
+        }
+
+        .results-container {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .score-display {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .score-display.good {
+            color: var(--success);
+        }
+
+        .score-display.average {
+            color: var(--warning);
+        }
+
+        .score-display.poor {
+            color: var(--error);
+        }
+
+        .percentage {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .gabarito-section {
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .gabarito-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--primary);
+        }
+
+        .result-item {
+            background: var(--background);
+            border-radius: 12px;
+            padding: 1.5rem;
             margin-bottom: 1.5rem;
+            border-left: 4px solid var(--border);
+        }
+
+        .result-item.correct {
+            border-left-color: var(--success);
+        }
+
+        .result-item.incorrect {
+            border-left-color: var(--error);
+        }
+
+        .result-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .result-badge.correct {
+            background: var(--success);
+            color: white;
+        }
+
+        .result-badge.incorrect {
+            background: var(--error);
+            color: white;
+        }
+
+        .result-question {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .result-answers {
+            margin-bottom: 1rem;
+        }
+
+        .user-answer {
+            color: var(--error);
+            margin-bottom: 0.5rem;
+        }
+
+        .correct-answer {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .explanation {
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.95rem;
             line-height: 1.5;
         }
 
-        .options-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .explanation strong {
+            color: var(--primary);
         }
 
-        .option-btn {
-            padding: 15px;
-            border: 2px solid #e5e7eb;
-            background: white;
-            border-radius: 8px;
-            text-align: left;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .option-btn:hover { border-color: var(--primary); background: #eff6ff; }
-        .option-btn.selected { border-color: var(--primary); background: #dbeafe; font-weight: bold; }
-
-        .nav-buttons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        button.action-btn {
-            background-color: var(--primary);
+        .restart-button {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: bold;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+            margin-right: auto;
         }
-        button.action-btn:hover { background-color: #1d4ed8; }
-        button.action-btn:disabled { background-color: #9ca3af; cursor: not-allowed; }
 
-        /* Estilos do Resultado */
-        .result-card {
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
+        .restart-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
         }
-        .result-card.correct { border-left: 5px solid var(--success); }
-        .result-card.wrong { border-left: 5px solid var(--error); }
-        
-        .explanation {
-            background-color: #f8fafc;
-            padding: 10px;
-            border-radius: 6px;
-            margin-top: 10px;
-            font-size: 0.9rem;
-            border-left: 3px solid #64748b;
-        }
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 5px;
-        }
-        .badge-success { background-color: var(--success); }
-        .badge-error { background-color: var(--error); }
 
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .content {
+                padding: 1.5rem;
+            }
+
+            .question-card {
+                padding: 1.5rem;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+            }
+
+            .option-button {
+                padding: 1rem;
+            }
+
+            .score-display {
+                font-size: 3rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <div id="root"></div>
 
-<div id="root"></div>
+    <script type="text/babel">
+        // Banco completo de questões sobre Lei de Tortura 9.455/97
+        const QUESTIONS_BANK = [
+            {
+                id: 1,
+                question: "Segundo a Lei 9.455/97, constitui crime de tortura:",
+                options: [
+                    "Apenas constranger alguém com emprego de violência física para obter informação",
+                    "Constranger alguém com emprego de violência ou grave ameaça, causando-lhe sofrimento físico ou mental",
+                    "Somente submeter alguém a intenso sofrimento físico como forma de castigo",
+                    "Constranger alguém apenas com emprego de violência, excluindo-se a grave ameaça",
+                    "Causar sofrimento físico ou mental apenas quando praticado por agente público"
+                ],
+                correctIndex: 1,
+                explanation: "O Art. 1º da Lei 9.455/97 define tortura como constranger alguém com emprego de violência OU grave ameaça, causando-lhe sofrimento físico OU mental. A lei abrange tanto violência física quanto psicológica."
+            },
+            {
+                id: 2,
+                question: "A pena para o crime de tortura simples, conforme a Lei 9.455/97, é de:",
+                options: [
+                    "Detenção de 1 a 3 anos",
+                    "Reclusão de 1 a 5 anos",
+                    "Reclusão de 2 a 8 anos",
+                    "Reclusão de 4 a 10 anos",
+                    "Detenção de 6 meses a 2 anos"
+                ],
+                correctIndex: 2,
+                explanation: "Segundo o Art. 1º da Lei 9.455/97, a pena para o crime de tortura é reclusão de 2 (dois) a 8 (oito) anos."
+            },
+            {
+                id: 3,
+                question: "Se o crime de tortura resulta em lesão corporal de natureza grave ou gravíssima, a pena é:",
+                options: [
+                    "A mesma da tortura simples, aplicando-se apenas a pena do Art. 1º",
+                    "Reclusão de 4 a 10 anos",
+                    "Reclusão de 6 a 12 anos",
+                    "Reclusão de 8 a 16 anos",
+                    "Detenção de 2 a 6 anos"
+                ],
+                correctIndex: 1,
+                explanation: "Conforme o Art. 1º, § 3º da Lei 9.455/97, se da tortura resulta lesão corporal de natureza grave ou gravíssima, a pena é de reclusão de 4 (quatro) a 10 (dez) anos."
+            },
+            {
+                id: 4,
+                question: "Quando o crime de tortura resulta em morte, a pena aplicável é:",
+                options: [
+                    "Reclusão de 6 a 15 anos",
+                    "Reclusão de 8 a 16 anos",
+                    "Reclusão de 10 a 20 anos",
+                    "Reclusão de 12 a 30 anos",
+                    "Prisão perpétua"
+                ],
+                correctIndex: 1,
+                explanation: "De acordo com o Art. 1º, § 3º da Lei 9.455/97, se da tortura resulta morte, a pena é de reclusão de 8 (oito) a 16 (dezesseis) anos."
+            },
+            {
+                id: 5,
+                question: "Aquele que se omite em face dessas condutas, quando tinha o dever de evitá-las ou apurá-las, incorre na pena de:",
+                options: [
+                    "Reclusão de 2 a 8 anos",
+                    "Detenção de 1 a 4 anos",
+                    "Reclusão de 1 a 4 anos",
+                    "Detenção de 6 meses a 2 anos",
+                    "Não há previsão de pena para omissão"
+                ],
+                correctIndex: 1,
+                explanation: "Segundo o Art. 1º, § 2º da Lei 9.455/97, aquele que se omite em face da tortura, quando tinha o dever de evitá-la ou apurá-la, incorre na pena de detenção de 1 (um) a 4 (quatro) anos."
+            },
+            {
+                id: 6,
+                question: "A pena é aumentada de um sexto até um terço se o crime de tortura é cometido:",
+                options: [
+                    "Apenas contra criança ou adolescente",
+                    "Contra gestante, criança, adolescente ou maior de 60 anos",
+                    "Somente contra pessoa com deficiência",
+                    "Contra gestante, criança, adolescente, maior de 60 anos ou pessoa com deficiência",
+                    "Apenas durante o período noturno"
+                ],
+                correctIndex: 3,
+                explanation: "O Art. 1º, § 4º, I da Lei 9.455/97 estabelece que a pena é aumentada de 1/6 a 1/3 se o crime é cometido contra criança, gestante, portador de deficiência, adolescente ou maior de 60 anos."
+            },
+            {
+                id: 7,
+                question: "Também há aumento de pena de um sexto até um terço se a tortura é cometida:",
+                options: [
+                    "Por agente público",
+                    "Mediante sequestro",
+                    "Com emprego de arma",
+                    "Por duas ou mais pessoas",
+                    "Durante a madrugada"
+                ],
+                correctIndex: 3,
+                explanation: "Conforme o Art. 1º, § 4º, II da Lei 9.455/97, a pena é aumentada de 1/6 a 1/3 se o crime é cometido por duas ou mais pessoas."
+            },
+            {
+                id: 8,
+                question: "O crime de tortura é:",
+                options: [
+                    "Afiançável e prescritível",
+                    "Inafiançável e prescritível",
+                    "Afiançável e imprescritível",
+                    "Inafiançável e imprescritível",
+                    "Afiançável apenas quando não resulta morte"
+                ],
+                correctIndex: 3,
+                explanation: "Segundo o Art. 1º, § 5º da Lei 9.455/97, o crime de tortura é inafiançável e imprescritível, quando cometido por agentes públicos contra pessoas sob sua guarda, poder ou autoridade."
+            },
+            {
+                id: 9,
+                question: "A condenação acarretará a perda do cargo, função ou emprego público e a interdição para seu exercício pelo dobro do prazo da pena aplicada quando:",
+                options: [
+                    "Em qualquer caso de tortura",
+                    "Apenas quando resulta morte",
+                    "Quando o agente for funcionário público",
+                    "Somente em caso de reincidência",
+                    "Quando cometida contra menor de idade"
+                ],
+                correctIndex: 2,
+                explanation: "O Art. 1º, § 6º da Lei 9.455/97 estabelece que a condenação acarretará a perda do cargo, função ou emprego público e a interdição para seu exercício pelo dobro do prazo da pena aplicada quando o agente for funcionário público."
+            },
+            {
+                id: 10,
+                question: "Submeter alguém, sob sua guarda, poder ou autoridade, com emprego de violência ou grave ameaça, a intenso sofrimento físico ou mental, como forma de aplicar castigo pessoal ou medida de caráter preventivo, constitui:",
+                options: [
+                    "Crime de maus-tratos",
+                    "Crime de tortura",
+                    "Crime de lesão corporal qualificada",
+                    "Crime de constrangimento ilegal",
+                    "Crime de abuso de autoridade"
+                ],
+                correctIndex: 1,
+                explanation: "Esta é a definição exata do crime de tortura prevista no Art. 1º, II da Lei 9.455/97 - tortura-castigo."
+            },
+            {
+                id: 11,
+                question: "Para caracterizar o crime de tortura do Art. 1º, I da Lei 9.455/97, é necessário:",
+                options: [
+                    "Apenas o emprego de violência física",
+                    "Que seja praticado por agente público",
+                    "Finalidade específica de obter informação, declaração ou confissão",
+                    "Que resulte em lesão corporal",
+                    "Que seja praticado mediante sequestro"
+                ],
+                correctIndex: 2,
+                explanation: "O Art. 1º, I da Lei 9.455/97 define a tortura-prova, que exige finalidade específica de obter informação, declaração ou confissão da vítima ou de terceira pessoa."
+            },
+            {
+                id: 12,
+                question: "A Lei de Tortura aplica-se:",
+                options: [
+                    "Apenas a agentes públicos",
+                    "Somente a particulares",
+                    "Tanto a agentes públicos quanto a particulares",
+                    "Apenas a militares",
+                    "Somente a autoridades policiais"
+                ],
+                correctIndex: 2,
+                explanation: "A Lei 9.455/97 aplica-se tanto a agentes públicos quanto a particulares, conforme se depreende da leitura de seus dispositivos."
+            },
+            {
+                id: 13,
+                question: "O sofrimento exigido para configurar tortura pode ser:",
+                options: [
+                    "Apenas físico",
+                    "Apenas mental",
+                    "Físico ou mental",
+                    "Somente físico grave",
+                    "Apenas psicológico permanente"
+                ],
+                correctIndex: 2,
+                explanation: "A Lei 9.455/97 prevê expressamente que o sofrimento pode ser físico OU mental, abrangendo ambas as modalidades."
+            },
+            {
+                id: 14,
+                question: "Em relação à tentativa no crime de tortura:",
+                options: [
+                    "Não é admitida",
+                    "É admitida e punida com a mesma pena",
+                    "É admitida e punida com pena reduzida",
+                    "Só é admitida na modalidade que resulta morte",
+                    "É considerada contravenção penal"
+                ],
+                correctIndex: 2,
+                explanation: "A tentativa é admitida no crime de tortura e punida com a pena correspondente diminuída de 1/3 a 2/3, conforme as regras gerais do Código Penal."
+            },
+            {
+                id: 15,
+                question: "A tortura praticada por particular contra pessoa sob sua responsabilidade:",
+                options: [
+                    "Não configura crime de tortura",
+                    "Configura apenas maus-tratos",
+                    "Configura crime de tortura",
+                    "É atipica",
+                    "Configura apenas lesão corporal"
+                ],
+                correctIndex: 2,
+                explanation: "A Lei 9.455/97 não restringe o crime de tortura apenas a agentes públicos, aplicando-se também a particulares que tenham a vítima sob sua guarda, poder ou autoridade."
+            },
+            {
+                id: 16,
+                question: "O elemento subjetivo do crime de tortura é:",
+                options: [
+                    "Apenas dolo direto",
+                    "Dolo direto ou eventual",
+                    "Culpa consciente",
+                    "Preterdolo",
+                    "Culpa inconsciente"
+                ],
+                correctIndex: 1,
+                explanation: "O crime de tortura admite tanto dolo direto quanto eventual, não sendo exigido dolo específico além da finalidade prevista no tipo."
+            },
+            {
+                id: 17,
+                question: "A competência para processar e julgar o crime de tortura é:",
+                options: [
+                    "Sempre da Justiça Federal",
+                    "Sempre da Justiça Estadual",
+                    "Da Justiça Militar quando praticado por militar",
+                    "Determinada conforme as regras gerais de competência",
+                    "Sempre do Tribunal do Júri"
+                ],
+                correctIndex: 3,
+                explanation: "A competência segue as regras gerais: Justiça Federal se houver interesse da União, Justiça Estadual nos demais casos, Justiça Militar se praticado por militar contra civil em situação específica."
+            },
+            {
+                id: 18,
+                question: "Para a configuração da tortura-castigo (Art. 1º, II), é essencial:",
+                options: [
+                    "Que a vítima seja menor de idade",
+                    "Que haja relação de guarda, poder ou autoridade",
+                    "Que seja praticada por agente público",
+                    "Que resulte em lesão corporal",
+                    "Que seja praticada em estabelecimento prisional"
+                ],
+                correctIndex: 1,
+                explanation: "A tortura-castigo exige que a vítima esteja sob a guarda, poder ou autoridade do agente, conforme previsto no Art. 1º, II da Lei 9.455/97."
+            },
+            {
+                id: 19,
+                question: "A grave ameaça mencionada na Lei de Tortura:",
+                options: [
+                    "Deve ser sempre de morte",
+                    "Pode ser de qualquer mal injusto e grave",
+                    "Deve ser apenas de violência física",
+                    "Não configura tortura por si só",
+                    "Deve ser dirigida a terceiros"
+                ],
+                correctIndex: 1,
+                explanation: "A grave ameaça pode ser de qualquer mal injusto e grave, não necessariamente de morte, desde que seja idônea a causar o constrangimento."
+            },
+            {
+                id: 20,
+                question: "O crime de tortura em relação à ação penal é:",
+                options: [
+                    "De ação penal privada",
+                    "De ação penal pública condicionada",
+                    "De ação penal pública incondicionada",
+                    "De ação penal privada subsidiária",
+                    "Depende de representação da vítima"
+                ],
+                correctIndex: 2,
+                explanation: "O crime de tortura é de ação penal pública incondicionada, podendo o Ministério Público oferecer denúncia independentemente de representação."
+            },
+            {
+                id: 21,
+                question: "A Lei 9.455/97 entrou em vigor em:",
+                options: [
+                    "7 de abril de 1997",
+                    "8 de abril de 1997",
+                    "9 de abril de 1997",
+                    "10 de abril de 1997",
+                    "11 de abril de 1997"
+                ],
+                correctIndex: 0,
+                explanation: "A Lei 9.455/97 foi sancionada em 7 de abril de 1997 e entrou em vigor na mesma data, definindo os crimes de tortura."
+            },
+            {
+                id: 22,
+                question: "O bem jurídico tutelado pela Lei de Tortura é:",
+                options: [
+                    "Apenas a integridade física",
+                    "Apenas a liberdade individual",
+                    "A dignidade da pessoa humana",
+                    "Apenas a integridade psíquica",
+                    "A administração pública"
+                ],
+                correctIndex: 2,
+                explanation: "O bem jurídico tutelado é a dignidade da pessoa humana, que engloba tanto a integridade física quanto psíquica e a liberdade individual."
+            },
+            {
+                id: 23,
+                question: "Em caso de concurso de crimes entre tortura e homicídio:",
+                options: [
+                    "Aplica-se apenas a pena da tortura",
+                    "Aplica-se apenas a pena do homicídio",
+                    "Há concurso formal",
+                    "Aplica-se a tortura qualificada pelo resultado morte",
+                    "Há concurso material"
+                ],
+                correctIndex: 3,
+                explanation: "Quando a tortura resulta em morte, aplica-se a tortura qualificada (Art. 1º, § 3º), não havendo concurso de crimes."
+            },
+            {
+                id: 24,
+                question: "A prescrição do crime de tortura:",
+                options: [
+                    "É sempre de 20 anos",
+                    "Segue as regras gerais do Código Penal",
+                    "Não ocorre quando praticado por agente público",
+                    "É de 12 anos em qualquer caso",
+                    "Não se aplica ao crime de tortura"
+                ],
+                correctIndex: 2,
+                explanation: "Conforme o Art. 1º, § 5º, o crime de tortura é imprescritível quando cometido por agentes públicos contra pessoas sob sua guarda, poder ou autoridade."
+            },
+            {
+                id: 25,
+                question: "Para a configuração da tortura é necessário:",
+                options: [
+                    "Contato físico direto",
+                    "Uso de instrumentos de tortura",
+                    "Constrangimento com violência ou grave ameaça",
+                    "Ambiente fechado",
+                    "Duração mínima de tempo"
+                ],
+                correctIndex: 2,
+                explanation: "O elemento essencial é o constrangimento mediante violência ou grave ameaça, não sendo necessário contato físico direto ou instrumentos específicos."
+            },
+            {
+                id: 26,
+                question: "A tortura praticada por dois ou mais agentes:",
+                options: [
+                    "Não altera a pena base",
+                    "Aumenta a pena de 1/6 a 1/3",
+                    "Aumenta a pena de 1/3 a 1/2",
+                    "Dobra a pena",
+                    "Configura crime autônomo"
+                ],
+                correctIndex: 1,
+                explanation: "Segundo o Art. 1º, § 4º, II, quando cometida por duas ou mais pessoas, a pena é aumentada de 1/6 a 1/3."
+            },
+            {
+                id: 27,
+                question: "O crime de tortura pode ser praticado mediante:",
+                options: [
+                    "Apenas ação",
+                    "Apenas omissão",
+                    "Ação ou omissão",
+                    "Somente ação dolosa",
+                    "Apenas omissão culposa"
+                ],
+                correctIndex: 2,
+                explanation: "O crime pode ser praticado por ação (praticar tortura) ou omissão (omitir-se quando tinha dever de evitar), conforme Art. 1º, § 2º."
+            },
+            {
+                id: 28,
+                question: "A expressão 'intenso sofrimento' na Lei de Tortura:",
+                options: [
+                    "Exige perícia médica",
+                    "É elemento normativo do tipo",
+                    "Deve ser permanente",
+                    "Refere-se apenas à dor física",
+                    "Deve durar mais de 24 horas"
+                ],
+                correctIndex: 1,
+                explanation: "A expressão 'intenso sofrimento' é um elemento normativo do tipo que deve ser valorado pelo juiz no caso concreto."
+            },
+            {
+                id: 29,
+                question: "A tortura contra pessoa maior de 60 anos:",
+                options: [
+                    "Tem a mesma pena da tortura simples",
+                    "É crime hediondo",
+                    "Tem pena aumentada de 1/6 a 1/3",
+                    "É da competência do Juizado Especial",
+                    "Configura crime contra o idoso"
+                ],
+                correctIndex: 2,
+                explanation: "Conforme Art. 1º, § 4º, I, a tortura contra maior de 60 anos tem pena aumentada de 1/6 a 1/3."
+            },
+            {
+                id: 30,
+                question: "O dolo na tortura-prova (Art. 1º, I) exige:",
+                options: [
+                    "Apenas a vontade de causar sofrimento",
+                    "Finalidade específica de obter informação",
+                    "Intenção de matar",
+                    "Vontade de humilhar",
+                    "Propósito de vingança"
+                ],
+                correctIndex: 1,
+                explanation: "A tortura-prova exige dolo específico: a finalidade de obter informação, declaração ou confissão da vítima ou terceiro."
+            },
+            {
+                id: 31,
+                question: "Em relação ao sujeito passivo da tortura:",
+                options: [
+                    "Deve ser sempre maior de idade",
+                    "Pode ser qualquer pessoa",
+                    "Deve estar sob custódia",
+                    "Deve ser nacional brasileiro",
+                    "Deve ter capacidade civil plena"
+                ],
+                correctIndex: 1,
+                explanation: "Qualquer pessoa pode ser sujeito passivo do crime de tortura, independentemente de idade, nacionalidade ou capacidade civil."
+            },
+            {
+                id: 32,
+                question: "A tortura praticada contra gestante:",
+                options: [
+                    "Não tem qualificadora específica",
+                    "Tem pena aumentada de 1/6 a 1/3",
+                    "É sempre crime hediondo",
+                    "Tem pena dobrada",
+                    "É de competência federal"
+                ],
+                correctIndex: 1,
+                explanation: "Segundo Art. 1º, § 4º, I, a tortura contra gestante tem pena aumentada de 1/6 a 1/3."
+            },
+            {
+                id: 33,
+                question: "O crime de tortura em relação à fiança:",
+                options: [
+                    "É sempre afiançável",
+                    "É inafiançável apenas quando resulta morte",
+                    "É inafiançável quando praticado por agente público",
+                    "Depende do valor da pena aplicada",
+                    "É afiançável apenas para primários"
+                ],
+                correctIndex: 2,
+                explanation: "O Art. 1º, § 5º estabelece que o crime é inafiançável quando cometido por agentes públicos contra pessoas sob sua guarda, poder ou autoridade."
+            },
+            {
+                id: 34,
+                question: "A interdição para exercício de função pública prevista na Lei de Tortura:",
+                options: [
+                    "É pelo mesmo prazo da pena",
+                    "É pelo dobro do prazo da pena",
+                    "É de 5 anos fixos",
+                    "É perpétua",
+                    "Não está prevista na lei"
+                ],
+                correctIndex: 1,
+                explanation: "Conforme Art. 1º, § 6º, a interdição é pelo dobro do prazo da pena aplicada quando o agente for funcionário público."
+            },
+            {
+                id: 35,
+                question: "A tortura como meio para obter confissão configura:",
+                options: [
+                    "Tortura-castigo",
+                    "Tortura-prova",
+                    "Constrangimento ilegal",
+                    "Abuso de autoridade",
+                    "Crime contra a honra"
+                ],
+                correctIndex: 1,
+                explanation: "A tortura para obter confissão é a modalidade tortura-prova, prevista no Art. 1º, I da Lei 9.455/97."
+            },
+            {
+                id: 36,
+                question: "Em relação ao elemento temporal na tortura:",
+                options: [
+                    "Deve durar pelo menos uma hora",
+                    "Não há duração mínima estabelecida",
+                    "Deve ser prolongada no tempo",
+                    "Deve durar mais que lesão corporal",
+                    "Deve ser instantânea"
+                ],
+                correctIndex: 1,
+                explanation: "A lei não estabelece duração mínima, sendo possível a configuração da tortura mesmo em atos de curta duração, desde que presentes os demais elementos."
+            },
+            {
+                id: 37,
+                question: "A prova obtida mediante tortura:",
+                options: [
+                    "É válida se confirmada por outros meios",
+                    "É absolutamente inadmissível",
+                    "Pode ser usada apenas na defesa",
+                    "É válida em crimes hediondos",
+                    "Depende de decisão judicial"
+                ],
+                correctIndex: 1,
+                explanation: "A Constituição Federal e a Lei de Tortura estabelecem que são inadmissíveis as provas obtidas por meios ilícitos, incluindo a tortura."
+            },
+            {
+                id: 38,
+                question: "O crime de tortura em relação ao local de sua prática:",
+                options: [
+                    "Só pode ocorrer em delegacias",
+                    "Só pode ocorrer em presídios",
+                    "Pode ocorrer em qualquer lugar",
+                    "Só pode ocorrer em repartições públicas",
+                    "Só pode ocorrer em local fechado"
+                ],
+                correctIndex: 2,
+                explanation: "O crime de tortura pode ser praticado em qualquer local, não havendo restrição legal quanto ao ambiente."
+            },
+            {
+                id: 39,
+                question: "A responsabilidade penal na tortura omissiva recai sobre quem:",
+                options: [
+                    "Qualquer pessoa presente",
+                    "Apenas autoridades policiais",
+                    "Quem tinha dever legal de evitar",
+                    "Apenas funcionários públicos",
+                    "Todos os agentes do Estado"
+                ],
+                correctIndex: 2,
+                explanation: "Conforme Art. 1º, § 2º, responde por omissão quem tinha o dever de evitar ou apurar a tortura, não qualquer pessoa."
+            },
+            {
+                id: 40,
+                question: "A Lei 9.455/97 define quantas modalidades de tortura:",
+                options: [
+                    "Uma modalidade",
+                    "Duas modalidades",
+                    "Três modalidades",
+                    "Quatro modalidades",
+                    "Cinco modalidades"
+                ],
+                correctIndex: 1,
+                explanation: "A lei define duas modalidades: tortura-prova (Art. 1º, I) para obter informação/confissão e tortura-castigo (Art. 1º, II) como forma de castigo."
+            },
+            {
+                id: 41,
+                question: "O crime de tortura praticado contra pessoa com deficiência:",
+                options: [
+                    "Não tem previsão específica",
+                    "Tem pena aumentada de 1/6 a 1/3",
+                    "É sempre crime hediondo",
+                    "Tem pena dobrada",
+                    "É de competência especial"
+                ],
+                correctIndex: 1,
+                explanation: "O Art. 1º, § 4º, I prevê aumento de pena de 1/6 a 1/3 quando a tortura é cometida contra pessoa com deficiência."
+            },
+            {
+                id: 42,
+                question: "Para caracterizar a omissão punível na tortura é necessário:",
+                options: [
+                    "Estar presente no local",
+                    "Ter conhecimento dos fatos",
+                    "Ter dever legal de evitar ou apurar",
+                    "Ser funcionário público",
+                    "Ter poder hierárquico"
+                ],
+                correctIndex: 2,
+                explanation: "O Art. 1º, § 2º exige que o omitente tenha o dever legal de evitar ou apurar a tortura, não bastando o mero conhecimento."
+            },
+            {
+                id: 43,
+                question: "A tortura praticada contra adolescente:",
+                options: [
+                    "Segue apenas o ECA",
+                    "Tem pena aumentada de 1/6 a 1/3",
+                    "É de competência da Vara da Infância",
+                    "Não se aplica a Lei 9.455/97",
+                    "Tem procedimento especial"
+                ],
+                correctIndex: 1,
+                explanation: "Conforme Art. 1º, § 4º, I, a tortura contra adolescente tem pena aumentada de 1/6 a 1/3, aplicando-se a Lei 9.455/97."
+            },
+            {
+                id: 44,
+                question: "O constrangimento exigido para configurar tortura deve ser:",
+                options: [
+                    "Apenas físico",
+                    "Irresistível",
+                    "Mediante violência ou grave ameaça",
+                    "Prolongado no tempo",
+                    "Com uso de armas"
+                ],
+                correctIndex: 2,
+                explanation: "O Art. 1º exige que o constrangimento seja mediante emprego de violência ou grave ameaça, sendo estes os meios típicos."
+            },
+            {
+                id: 45,
+                question: "Em relação à consumação do crime de tortura:",
+                options: [
+                    "Consuma-se com o início da violência",
+                    "Consuma-se com o sofrimento da vítima",
+                    "Consuma-se com a obtenção da confissão",
+                    "É crime permanente",
+                    "Consuma-se apenas com lesão corporal"
+                ],
+                correctIndex: 1,
+                explanation: "O crime consuma-se quando a vítima efetivamente sofre o constrangimento com sofrimento físico ou mental, independentemente do resultado visado."
+            },
+            {
+                id: 46,
+                question: "A Lei de Tortura em relação aos tratados internacionais:",
+                options: [
+                    "Não tem relação",
+                    "Implementa a Convenção contra Tortura da ONU",
+                    "Contraria tratados internacionais",
+                    "É mais branda que convenções",
+                    "Aplica-se apenas internamente"
+                ],
+                correctIndex: 1,
+                explanation: "A Lei 9.455/97 foi editada para dar cumprimento à Convenção contra a Tortura e outros Tratamentos ou Penas Cruéis, Desumanos ou Degradantes da ONU."
+            },
+            {
+                id: 47,
+                question: "O sofrimento mental na tortura pode decorrer de:",
+                options: [
+                    "Apenas ameaças verbais",
+                    "Violência psicológica de qualquer natureza",
+                    "Somente isolamento",
+                    "Apenas privação de sono",
+                    "Somente humilhação"
+                ],
+                correctIndex: 1,
+                explanation: "O sofrimento mental pode decorrer de qualquer forma de violência psicológica idônea a causar intenso sofrimento mental à vítima."
+            },
+            {
+                id: 48,
+                question: "A competência territorial para julgar tortura é determinada pelo:",
+                options: [
+                    "Local da prisão do acusado",
+                    "Local do resultado",
+                    "Local da ação ou omissão",
+                    "Domicílio da vítima",
+                    "Local da denúncia"
+                ],
+                correctIndex: 2,
+                explanation: "Seguindo as regras gerais do CPP, a competência territorial é determinada pelo local da ação ou omissão, ainda que outro seja o resultado."
+            },
+            {
+                id: 49,
+                question: "A tortura como forma de discriminação racial ou religiosa:",
+                options: [
+                    "Não altera a tipificação",
+                    "Configura crime autônomo",
+                    "Pode configurar tortura com motivação específica",
+                    "É apenas contravenção",
+                    "Não é prevista em lei"
+                ],
+                correctIndex: 2,
+                explanation: "Embora não haja causa de aumento específica, a motivação discriminatória pode ser considerada na dosimetria da pena e caracterizar a tortura."
+            },
+            {
+                id: 50,
+                question: "A reparação civil do dano causado pela tortura:",
+                options: [
+                    "Não é possível",
+                    "Depende de condenação criminal",
+                    "É independente da esfera criminal",
+                    "Só é possível contra o Estado",
+                    "Tem valor fixo em lei"
+                ],
+                correctIndex: 2,
+                explanation: "A reparação civil é independente da criminal, podendo a vítima buscar indenização mesmo sem condenação criminal, conforme princípios gerais do direito civil."
+            }
+        ];
 
-<script type="text/babel">
-
-    // --- BANCO DE QUESTÕES (Aqui você adiciona quantas quiser) ---
-    // DICA: Para "inovar", adicione 50 ou 100 questões aqui. 
-    // O sistema vai sortear 20 diferentes a cada acesso.
-    const questionBank = [
-        {
-            id: 1,
-            question: "Sobre a Lei de Tortura (Lei 9.455/97), assinale a alternativa correta:",
-            options: [
-                "Aplica-se apenas a agentes públicos.",
-                "O crime de tortura é afiançável.",
-                "Constranger alguém com emprego de violência, causando sofrimento físico ou mental, configura tortura.",
-                "Apenas a dor física é considerada tortura, a psicológica é crime de ameaça.",
-                "A condenação não acarreta a perda do cargo público automaticamente."
-            ],
-            correctIndex: 2, // 0 é A, 1 é B, 2 é C...
-            explanation: "Correto. O Art. 1º define tortura como constranger alguém com violência ou grave ameaça, causando sofrimento físico ou mental. É crime inafiançável e a perda do cargo é efeito automático."
-        },
-        {
-            id: 2,
-            question: "Se o crime de tortura resulta em morte, a pena é de:",
-            options: [
-                "Reclusão de 2 a 8 anos.",
-                "Reclusão de 4 a 10 anos.",
-                "Reclusão de 8 a 16 anos.",
-                "Reclusão de 12 a 30 anos.",
-                "Detenção de 1 a 3 anos."
-            ],
-            correctIndex: 2,
-            explanation: "Se resulta morte, a tortura é qualificada e a pena passa a ser de reclusão de 8 a 16 anos (Art. 1º, § 3º)."
-        },
-        {
-            id: 3,
-            question: "Aquele que se omite diante da tortura, quando tinha o dever de evitá-la, responde por:",
-            options: [
-                "Coautoria no crime de tortura.",
-                "Crime de prevaricação.",
-                "Tortura na modalidade omissiva, com a mesma pena do executor.",
-                "Tortura na modalidade omissiva, com pena de detenção de 1 a 4 anos.",
-                "Não responde por crime algum."
-            ],
-            correctIndex: 3,
-            explanation: "A omissão na tortura é punida de forma mais branda (Detenção de 1 a 4 anos), conforme o Art. 1º, § 2º."
-        },
-        // ... ADICIONE MAIS QUESTÕES AQUI SEGUINDO O MODELO ACIMA ...
-        // Vou duplicar as questões acima apenas para simular o banco de dados cheio
-        { id: 4, question: "Variação 1: Tortura Prova - Qual a finalidade?", options: ["Lazer", "Obter confissão", "Nenhuma", "Apenas dor", "Vingança"], correctIndex: 1, explanation: "Tortura-prova visa obter informação ou confissão." },
-        { id: 5, question: "Variação 2: Aumenta a pena se a vítima é?", options: ["Homem adulto", "Gestante", "Rico", "Político", "Estrangeiro"], correctIndex: 1, explanation: "Aumenta de 1/6 a 1/3 se cometido contra gestante, criança, adolescente, idoso ou deficiente." },
-    ];
-
-    // --- LÓGICA DO SISTEMA ---
-
-    function shuffleArray(array) {
-        let currentIndex = array.length, randomIndex;
-        while (currentIndex !== 0) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex--;
-            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
         }
-        return array;
-    }
 
-    function App() {
-        // Estados
-        const [questions, setQuestions] = React.useState([]);
-        const [currentQIndex, setCurrentQIndex] = React.useState(0);
-        const [userAnswers, setUserAnswers] = React.useState({});
-        const [finished, setFinished] = React.useState(false);
-        const [score, setScore] = React.useState(0);
+        function getRandomQuestions(bank, count) {
+            const shuffled = shuffleArray(bank);
+            return shuffled.slice(0, Math.min(count, shuffled.length));
+        }
 
-        // Ao carregar, sorteia 20 questões (ou menos se o banco for pequeno)
-        React.useEffect(() => {
-            // Duplicando o banco só para testar se tiver poucas questões, no seu caso use o banco real
-            const fullBank = [...questionBank, ...questionBank, ...questionBank, ...questionBank]; 
-            const shuffled = shuffleArray([...fullBank]);
-            setQuestions(shuffled.slice(0, 20)); // PEGA 20 QUESTÕES
-        }, []);
+        function QuizApp() {
+            const [questions, setQuestions] = React.useState([]);
+            const [currentIndex, setCurrentIndex] = React.useState(0);
+            const [answers, setAnswers] = React.useState({});
+            const [showResults, setShowResults] = React.useState(false);
+            const [score, setScore] = React.useState(0);
 
-        const handleOptionSelect = (optionIndex) => {
-            setUserAnswers({
-                ...userAnswers,
-                [currentQIndex]: optionIndex
-            });
-        };
+            React.useEffect(() => {
+                const selectedQuestions = getRandomQuestions(QUESTIONS_BANK, 20);
+                setQuestions(selectedQuestions);
+            }, []);
 
-        const nextQuestion = () => {
-            if (currentQIndex < questions.length - 1) {
-                setCurrentQIndex(currentQIndex + 1);
-            } else {
-                finishQuiz();
-            }
-        };
+            const handleAnswerSelect = (answerIndex) => {
+                setAnswers({
+                    ...answers,
+                    [currentIndex]: answerIndex
+                });
+            };
 
-        const prevQuestion = () => {
-            if (currentQIndex > 0) {
-                setCurrentQIndex(currentQIndex - 1);
-            }
-        };
-
-        const finishQuiz = () => {
-            let acertos = 0;
-            questions.forEach((q, index) => {
-                if (userAnswers[index] === q.correctIndex) {
-                    acertos++;
+            const handleNext = () => {
+                if (currentIndex < questions.length - 1) {
+                    setCurrentIndex(currentIndex + 1);
+                } else {
+                    finishQuiz();
                 }
-            });
-            setScore(acertos);
-            setFinished(true);
-        };
+            };
 
-        const restart = () => {
-            window.location.reload();
-        };
+            const handlePrevious = () => {
+                if (currentIndex > 0) {
+                    setCurrentIndex(currentIndex - 1);
+                }
+            };
 
-        if (questions.length === 0) return <div className="container">Carregando simulado...</div>;
+            const finishQuiz = () => {
+                let correctCount = 0;
+                questions.forEach((question, index) => {
+                    if (answers[index] === question.correctIndex) {
+                        correctCount++;
+                    }
+                });
+                setScore(correctCount);
+                setShowResults(true);
+            };
 
-        // TELA DE RESULTADO
-        if (finished) {
-            const percentage = (score / questions.length) * 100;
+            const restartQuiz = () => {
+                const selectedQuestions = getRandomQuestions(QUESTIONS_BANK, 20);
+                setQuestions(selectedQuestions);
+                setCurrentIndex(0);
+                setAnswers({});
+                setShowResults(false);
+                setScore(0);
+            };
+
+            if (questions.length === 0) {
+                return (
+                    <div className="container">
+                        <div className="loading">
+                            <i className="fas fa-spinner fa-spin" style={{fontSize: '2rem', marginBottom: '1rem'}}></i>
+                            <p>Carregando questões da Lei de Tortura...</p>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (showResults) {
+                const percentage = Math.round((score / questions.length) * 100);
+                const getScoreClass = () => {
+                    if (percentage >= 70) return 'good';
+                    if (percentage >= 50) return 'average';
+                    return 'poor';
+                };
+
+                return (
+                    <div className="container">
+                        <div className="header">
+                            <h1><i className="fas fa-trophy"></i> Resultado Final</h1>
+                            <p>Quiz Lei de Tortura 9.455/97</p>
+                        </div>
+                        
+                        <div className="content">
+                            <div className="results-container">
+                                <div className={`score-display ${getScoreClass()}`}>
+                                    {score}/{questions.length}
+                                </div>
+                                <div className="percentage">
+                                    Você acertou {percentage}% das questões
+                                </div>
+                                
+                                <button className="restart-button" onClick={restartQuiz}>
+                                    <i className="fas fa-redo"></i>
+                                    Fazer Novo Quiz
+                                </button>
+                            </div>
+
+                            <div className="gabarito-section">
+                                <h2 className="gabarito-title">
+                                    <i className="fas fa-list-check"></i> Gabarito Comentado
+                                </h2>
+                                
+                                {questions.map((question, index) => {
+                                    const userAnswer = answers[index];
+                                    const isCorrect = userAnswer === question.correctIndex;
+                                    const letters = ['A', 'B', 'C', 'D', 'E'];
+                                    
+                                    return (
+                                        <div key={question.id} className={`result-item ${isCorrect ? 'correct' : 'incorrect'}`}>
+                                            <div className={`result-badge ${isCorrect ? 'correct' : 'incorrect'}`}>
+                                                {isCorrect ? '✓ Acertou' : '✗ Errou'}
+                                            </div>
+                                            
+                                            <div className="result-question">
+                                                <strong>Questão {index + 1}:</strong> {question.question}
+                                            </div>
+                                            
+                                            <div className="result-answers">
+                                                <div className="user-answer">
+                                                    <strong>Sua resposta:</strong> {userAnswer !== undefined ? `${letters[userAnswer]}) ${question.options[userAnswer]}` : 'Não respondeu'}
+                                                </div>
+                                                {!isCorrect && (
+                                                    <div className="correct-answer">
+                                                        <strong>Resposta correta:</strong> {letters[question.correctIndex]}) {question.options[question.correctIndex]}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            
+                                            <div className="explanation">
+                                                <strong><i className="fas fa-lightbulb"></i> Explicação:</strong> {question.explanation}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            const currentQuestion = questions[currentIndex];
+            const progress = ((currentIndex + 1) / questions.length) * 100;
+            const letters = ['A', 'B', 'C', 'D', 'E'];
+
             return (
                 <div className="container">
-                    <h2>Resultado Final</h2>
-                    <div style={{textAlign: 'center', marginBottom: '30px'}}>
-                        <h1 style={{fontSize: '3rem', margin: '10px 0', color: percentage >= 70 ? '#10b981' : '#ef4444'}}>
-                            {score} / {questions.length}
-                        </h1>
-                        <p>Você acertou {percentage}% da prova.</p>
-                        <button className="action-btn" onClick={restart}>Novo Simulado (Gerar novas questões)</button>
+                    <div className="header">
+                        <h1><i className="fas fa-scale-balanced"></i> Quiz Lei de Tortura</h1>
+                        <p>Lei 9.455/97 - Preparação para Concursos</p>
                     </div>
-
-                    <h3>Gabarito Comentado:</h3>
-                    {questions.map((q, index) => {
-                        const userAnswer = userAnswers[index];
-                        const isCorrect = userAnswer === q.correctIndex;
-                        
-                        return (
-                            <div key={index} className={`result-card ${isCorrect ? 'correct' : 'wrong'}`}>
-                                <div className="badge" className={isCorrect ? 'badge badge-success' : 'badge badge-error'}>
-                                    {isCorrect ? 'ACERTOU' : 'ERROU'}
-                                </div>
-                                <p style={{fontWeight: 'bold', margin: '10px 0'}}>Questão {index + 1}: {q.question}</p>
-                                
-                                <p style={{color: isCorrect ? 'green' : 'red'}}>
-                                    Sua resposta: {q.options[userAnswer] || "Não respondeu"}
-                                </p>
-                                {!isCorrect && (
-                                    <p style={{color: 'green', fontWeight: 'bold'}}>
-                                        Correta: {q.options[q.correctIndex]}
-                                    </p>
-                                )}
-                                
-                                <div className="explanation">
-                                    <strong>Por que?</strong> {q.explanation}
-                                </div>
+                    
+                    <div className="content">
+                        <div className="progress-container">
+                            <div className="progress-info">
+                                <span className="question-counter">
+                                    <i className="fas fa-question-circle"></i> Questão {currentIndex + 1} de {questions.length}
+                                </span>
+                                <span style={{color: 'var(--text-secondary)'}}>
+                                    {Math.round(progress)}% concluído
+                                </span>
                             </div>
-                        )
-                    })}
+                            <div className="progress-bar">
+                                <div className="progress-fill" style={{width: `${progress}%`}}></div>
+                            </div>
+                        </div>
+
+                        <div className="question-card">
+                            <div className="question-text">
+                                {currentQuestion.question}
+                            </div>
+                            
+                            <div className="options-container">
+                                {currentQuestion.options.map((option, index) => (
+                                    <button
+                                        key={index}
+                                        className={`option-button ${answers[currentIndex] === index ? 'selected' : ''}`}
+                                        onClick={() => handleAnswerSelect(index)}
+                                    >
+                                        <div className="option-letter">
+                                            {letters[index]}
+                                        </div>
+                                        <span>{option}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="navigation">
+                            <button
+                                className="nav-button secondary"
+                                onClick={handlePrevious}
+                                disabled={currentIndex === 0}
+                                style={{visibility: currentIndex === 0 ? 'hidden' : 'visible'}}
+                            >
+                                <i className="fas fa-chevron-left"></i>
+                                Anterior
+                            </button>
+                            
+                            <button
+                                className="nav-button"
+                                onClick={handleNext}
+                                disabled={answers[currentIndex] === undefined}
+                            >
+                                {currentIndex === questions.length - 1 ? (
+                                    <>
+                                        <i className="fas fa-flag-checkered"></i>
+                                        Finalizar Quiz
+                                    </>
+                                ) : (
+                                    <>
+                                        Próxima
+                                        <i className="fas fa-chevron-right"></i>
+                                    </>
+                                )}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             );
         }
 
-        // TELA DO QUIZ (QUESTÃO ATUAL)
-        const currentQ = questions[currentQIndex];
-        const progress = ((currentQIndex + 1) / questions.length) * 100;
-
-        return (
-            <div className="container">
-                <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-                    <span>Questão {currentQIndex + 1} de {questions.length}</span>
-                    <span style={{fontSize: '0.9rem', color: '#6b7280'}}>Direito Penal</span>
-                </div>
-                
-                <div className="progress-bar">
-                    <div className="progress-fill" style={{width: `${progress}%`}}></div>
-                </div>
-
-                <div className="question-text">
-                    {currentQ.question}
-                </div>
-
-                <div className="options-grid">
-                    {currentQ.options.map((opt, i) => (
-                        <button 
-                            key={i}
-                            className={`option-btn ${userAnswers[currentQIndex] === i ? 'selected' : ''}`}
-                            onClick={() => handleOptionSelect(i)}
-                        >
-                            <span style={{fontWeight:'bold', marginRight:'10px'}}>{['A','B','C','D','E'][i]})</span> 
-                            {opt}
-                        </button>
-                    ))}
-                </div>
-
-                <div className="nav-buttons">
-                    <button 
-                        className="action-btn" 
-                        style={{background: '#9ca3af', visibility: currentQIndex === 0 ? 'hidden' : 'visible'}}
-                        onClick={prevQuestion}
-                    >
-                        Anterior
-                    </button>
-                    
-                    <button 
-                        className="action-btn"
-                        onClick={nextQuestion}
-                        disabled={userAnswers[currentQIndex] === undefined}
-                    >
-                        {currentQIndex === questions.length - 1 ? 'Finalizar e Ver Nota' : 'Próxima'}
-                    </button>
-                </div>
-            </div>
-        );
-    }
-
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-
-</script>
-
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<QuizApp />);
+    </script>
 </body>
 </html>
