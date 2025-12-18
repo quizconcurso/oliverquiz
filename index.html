@@ -3,34 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Preparatório - Polícia Penal MG</title>
+    <title>Instituto Oliver - Quiz Leis Penais Especiais</title>
     
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js';
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js';
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyAAealJwt0ufN62PJ7sNU-Ye62X4Gl4QbY",
-            authDomain: "quiz-preparatorio.firebaseapp.com",
-            projectId: "quiz-preparatorio",
-            storageBucket: "quiz-preparatorio.firebasestorage.app",
-            messagingSenderId: "447280609192",
-            appId: "1:447280609192:web:bfcc7ab1688a0e481e8f9d",
-            measurementId: "G-WE70537LPE"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        window.firebaseAuth = getAuth(app);
-        window.firebaseSignIn = signInWithEmailAndPassword;
-        window.firebaseSignUp = createUserWithEmailAndPassword;
-        window.firebaseSignOut = signOut;
-        window.firebaseAuthStateChanged = onAuthStateChanged;
-    </script>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -43,24 +20,23 @@
         }
 
         :root {
-            --primary: #8B4513;
-            --primary-light: #A0522D;
-            --primary-dark: #654321;
-            --secondary: #F5DEB3;
-            --accent: #DEB887;
+            --primary: #FFD700;
+            --primary-dark: #FFC107;
+            --secondary: #000000;
+            --accent: #333333;
             --background: #FFFFFF;
-            --card: #FAF0E6;
+            --card: #F8F9FA;
             --text: #000000;
             --text-secondary: #666666;
-            --border: #D2B48C;
-            --success: #4CAF50;
+            --border: #E0E0E0;
+            --success: #28A745;
             --error: #DC3545;
             --warning: #FFC107;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, var(--secondary) 0%, #FFF8DC 100%);
+            background: linear-gradient(135deg, var(--background) 0%, #F5F5F5 100%);
             color: var(--text);
             min-height: 100vh;
             padding: 20px;
@@ -71,9 +47,9 @@
             margin: 0 auto;
             background: var(--background);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            border: 3px solid var(--primary);
+            border: 2px solid var(--primary);
             position: relative;
         }
 
@@ -83,15 +59,14 @@
             right: 20px;
             width: 120px;
             height: auto;
-            opacity: 0.95;
+            opacity: 0.9;
             z-index: 1000;
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            border: 2px solid var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .header {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
             padding: 2.5rem 2rem;
             text-align: center;
             color: white;
@@ -106,7 +81,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23F5DEB3" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23F5DEB3" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23FFD700" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23FFD700" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="%23FFD700" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
             opacity: 0.3;
         }
 
@@ -122,8 +97,8 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .site-name {
-            color: var(--secondary);
+        .header .institute-name {
+            color: var(--primary);
             font-weight: 800;
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
@@ -141,301 +116,11 @@
             padding: 2.5rem;
         }
 
-        /* Menu Superior */
-        .top-menu {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1rem;
-            background: var(--card);
-            border-radius: 12px;
-            border: 2px solid var(--border);
-        }
-
-        .developer-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .developer-section:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .developer-photo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary);
-        }
-
-        .developer-info h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.2rem;
-        }
-
-        .developer-info p {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .auth-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .auth-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .auth-btn.secondary {
-            background: var(--text-secondary);
-        }
-
-        .auth-btn.secondary:hover {
-            background: var(--primary-dark);
-        }
-
-        /* Formulários de Login/Registro */
-        .auth-form {
-            background: var(--card);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 2px solid var(--primary);
-            max-width: 400px;
-            margin: 2rem auto;
-        }
-
-        .auth-form h2 {
-            text-align: center;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            font-weight: 800;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--primary-dark);
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .form-submit {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 1rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 1rem;
-        }
-
-        .form-submit:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .form-toggle {
-            text-align: center;
-            color: var(--text-secondary);
-        }
-
-        .form-toggle button {
-            background: none;
-            border: none;
-            color: var(--primary);
-            cursor: pointer;
-            text-decoration: underline;
-            font-weight: 600;
-        }
-
-        .error-message {
-            background: var(--error);
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: var(--primary-dark);
-            font-weight: 600;
-        }
-
-        /* Sistema de Progressão */
-        .progress-system {
-            background: linear-gradient(135deg, var(--card) 0%, #FFF8DC 100%);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 2px solid var(--primary);
-        }
-
-        .main-progress {
-            margin-bottom: 2rem;
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .progress-title {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .progress-stats {
-            display: flex;
-            gap: 1.5rem;
-            font-weight: 700;
-        }
-
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .stat-value {
-            font-size: 1.8rem;
-            color: var(--primary);
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 30px;
-            background: #E0E0E0;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 15px;
-            transition: width 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 10px;
-            color: white;
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-
-        .themes-progress {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-        }
-
-        .theme-progress-item {
-            background: white;
-            padding: 1rem;
-            border-radius: 12px;
-            border: 2px solid var(--border);
-        }
-
-        .theme-progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .theme-name {
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 0.95rem;
-        }
-
-        .theme-percentage {
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .theme-progress-bar {
-            width: 100%;
-            height: 20px;
-            background: #E0E0E0;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .theme-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--success) 100%);
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-
         /* Menu Principal */
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
             margin-bottom: 2rem;
         }
 
@@ -443,7 +128,7 @@
             background: var(--card);
             border: 3px solid var(--border);
             border-radius: 16px;
-            padding: 1.5rem;
+            padding: 2rem;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
@@ -458,7 +143,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(139, 69, 19, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
             transition: left 0.5s;
         }
 
@@ -469,46 +154,38 @@
         .menu-card:hover {
             border-color: var(--primary);
             transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(139, 69, 19, 0.3);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.3);
         }
 
         .menu-card-icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: var(--primary);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .menu-card h3 {
-            font-size: 1.3rem;
+            font-size: 1.6rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
-            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            color: var(--secondary);
         }
 
         .menu-card p {
             color: var(--text-secondary);
-            line-height: 1.5;
+            line-height: 1.6;
             font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .menu-card .progress-indicator {
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--primary);
         }
 
         .simulado-card {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--secondary);
             border: 3px solid var(--primary-dark);
-            grid-column: 1 / -1;
         }
 
         .simulado-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.4);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.4);
         }
 
         .simulado-card .menu-card-icon {
@@ -517,7 +194,7 @@
 
         .simulado-card h3,
         .simulado-card p {
-            color: white;
+            color: var(--secondary);
         }
 
         /* Quiz Styles */
@@ -527,7 +204,7 @@
         }
 
         .back-button {
-            background: var(--primary);
+            background: var(--accent);
             color: white;
             border: none;
             padding: 0.75rem 1.5rem;
@@ -542,7 +219,7 @@
         }
 
         .back-button:hover {
-            background: var(--primary-dark);
+            background: var(--secondary);
             transform: translateY(-2px);
         }
 
@@ -551,7 +228,7 @@
             background: var(--card);
             padding: 1.5rem;
             border-radius: 12px;
-            border: 2px solid var(--primary);
+            border: 2px solid var(--border);
         }
 
         .progress-info {
@@ -563,7 +240,7 @@
 
         .question-counter {
             font-weight: 700;
-            color: var(--primary);
+            color: var(--secondary);
             font-size: 1.1rem;
         }
 
@@ -577,7 +254,7 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
             border-radius: 6px;
             transition: width 0.5s ease;
         }
@@ -587,7 +264,7 @@
             border-radius: 16px;
             padding: 2.5rem;
             margin-bottom: 2rem;
-            border: 2px solid var(--primary);
+            border: 2px solid var(--border);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
         }
 
@@ -596,7 +273,7 @@
             font-weight: 600;
             line-height: 1.6;
             margin-bottom: 2rem;
-            color: var(--primary-dark);
+            color: var(--secondary);
         }
 
         .options-container {
@@ -623,14 +300,14 @@
 
         .option-button:hover {
             border-color: var(--primary);
-            background: rgba(139, 69, 19, 0.05);
+            background: rgba(255, 215, 0, 0.1);
             transform: translateX(5px);
         }
 
         .option-button.selected {
             border-color: var(--primary);
-            background: rgba(139, 69, 19, 0.1);
-            color: var(--primary-dark);
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--secondary);
             font-weight: 700;
         }
 
@@ -650,7 +327,7 @@
 
         .option-button.selected .option-letter {
             background: var(--primary);
-            color: white;
+            color: var(--secondary);
         }
 
         .navigation {
@@ -662,7 +339,7 @@
 
         .nav-button {
             background: var(--primary);
-            color: white;
+            color: var(--secondary);
             border: none;
             padding: 1rem 2.5rem;
             border-radius: 12px;
@@ -676,9 +353,9 @@
         }
 
         .nav-button:hover {
-            background: var(--primary-light);
+            background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(139, 69, 19, 0.3);
+            box-shadow: 0 8px 16px rgba(255, 215, 0, 0.3);
         }
 
         .nav-button:disabled {
@@ -689,12 +366,12 @@
         }
 
         .nav-button.secondary {
-            background: var(--text-secondary);
+            background: var(--accent);
             color: white;
         }
 
         .nav-button.secondary:hover {
-            background: var(--primary-dark);
+            background: var(--secondary);
         }
 
         /* Results */
@@ -714,21 +391,6 @@
         .score-display.average { color: var(--warning); }
         .score-display.poor { color: var(--error); }
 
-        .approval-message {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--success);
-            margin: 1rem 0;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
         .percentage {
             font-size: 1.6rem;
             margin-bottom: 2rem;
@@ -745,7 +407,7 @@
         }
 
         .restart-button {
-            background: linear-gradient(135deg, var(--success) 0%, #388E3C 100%);
+            background: linear-gradient(135deg, var(--success) 0%, #218838 100%);
             color: white;
             border: none;
             padding: 1rem 2rem;
@@ -761,12 +423,12 @@
 
         .restart-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
         }
 
         .menu-button {
             background: var(--primary);
-            color: white;
+            color: var(--secondary);
             border: none;
             padding: 1rem 2rem;
             border-radius: 12px;
@@ -780,7 +442,7 @@
         }
 
         .menu-button:hover {
-            background: var(--primary-light);
+            background: var(--primary-dark);
             transform: translateY(-2px);
         }
 
@@ -794,7 +456,7 @@
             font-weight: 800;
             margin-bottom: 2rem;
             text-align: center;
-            color: var(--primary);
+            color: var(--secondary);
         }
 
         .result-item {
@@ -834,7 +496,7 @@
             font-weight: 700;
             margin-bottom: 1rem;
             font-size: 1.1rem;
-            color: var(--primary-dark);
+            color: var(--secondary);
         }
 
         .result-answers {
@@ -853,8 +515,8 @@
         }
 
         .explanation {
-            background: rgba(139, 69, 19, 0.05);
-            border: 2px solid rgba(139, 69, 19, 0.2);
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
             border-radius: 10px;
             padding: 1.2rem;
             margin-top: 1rem;
@@ -864,7 +526,7 @@
         }
 
         .explanation strong {
-            color: var(--primary);
+            color: var(--secondary);
         }
 
         .loading {
@@ -894,209 +556,805 @@
                 top: 10px; 
                 right: 10px; 
             }
-            .themes-progress {
-                grid-template-columns: 1fr;
-            }
-            .progress-stats {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            .top-menu {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .auth-buttons {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
 <body>
-    <img src="./developer-photo.jpg" alt="Quiz Preparatório" class="logo-watermark" />
+    <img src="/images/InstitutoOliver.jpg" alt="Instituto Oliver" class="logo-watermark" />
     <div id="root"></div>
 
     <script type="text/babel">
-        // Sistema de armazenamento local
-        const STORAGE_KEY = 'quiz_preparatorio_progress';
-
-        // Função para carregar progresso do localStorage
-        function loadProgress() {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                return JSON.parse(saved);
-            }
-            return {
-                totalPoints: 0,
-                themes: {}
-            };
-        }
-
-        // Função para salvar progresso no localStorage
-        function saveProgress(progress) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-        }
-
-        // Configuração dos temas com peso para balanceamento
-        const THEMES_CONFIG = {
-            lep: {
-                title: "Lei de Execução Penal",
-                subtitle: "Arts. 10-27, 38-54, 110-119",
-                icon: "fas fa-building",
-                description: "Assistência ao preso, trabalho, disciplina e regime penitenciário.",
-                weight: 100,
-                questionsCount: 30
-            },
-            abuso_autoridade: {
-                title: "Lei de Abuso de Autoridade",
-                subtitle: "Arts. 1-5, 9-38 - Lei 13.869/19",
-                icon: "fas fa-balance-scale",
-                description: "Crimes de abuso de autoridade e suas penalidades.",
-                weight: 100,
-                questionsCount: 30
-            },
-            tortura: {
-                title: "Lei de Tortura",
-                subtitle: "Lei 9.455/97",
-                icon: "fas fa-gavel",
-                description: "Crimes de tortura, penas e qualificadoras.",
-                weight: 100,
-                questionsCount: 30
-            },
-            drogas: {
-                title: "Lei de Drogas",
-                subtitle: "Arts. 28-33 - Lei 11.343/06",
-                icon: "fas fa-pills",
-                description: "Uso e tráfico de drogas, penas especiais.",
-                weight: 100,
-                questionsCount: 30
-            },
-            desarmamento: {
-                title: "Estatuto do Desarmamento",
-                subtitle: "Arts. 12-18 - Lei 10.826/03",
-                icon: "fas fa-ban",
-                description: "Posse, porte e comércio de armas.",
-                weight: 100,
-                questionsCount: 30
-            },
-            dudh: {
-                title: "DUDH",
-                subtitle: "Declaração Universal dos Direitos Humanos",
-                icon: "fas fa-globe",
-                description: "Todos os artigos da DUDH.",
-                weight: 100,
-                questionsCount: 30
-            },
-            mandela: {
-                title: "Regras de Mandela",
-                subtitle: "Tratamento de Presos",
-                icon: "fas fa-handcuffs",
-                description: "Tratamento, higiene, alimentação e punições.",
-                weight: 100,
-                questionsCount: 30
-            },
-            san_jose: {
-                title: "Pacto de San José",
-                subtitle: "Arts. 1-25",
-                icon: "fas fa-landmark",
-                description: "Convenção Americana sobre Direitos Humanos.",
-                weight: 100,
-                questionsCount: 30
-            },
-            direito: {
-                title: "Noções de Direito",
-                subtitle: "CF, CP - Seleção de Artigos",
-                icon: "fas fa-book-open",
-                description: "CF (Arts. 5, 37, 144) e CP (Arts. 13-25, 312-327).",
-                weight: 100,
-                questionsCount: 30
-            }
-        };
-
-        // Total de pontos necessários para completar (soma dos pesos)
-        const TOTAL_POINTS_NEEDED = Object.values(THEMES_CONFIG).reduce((sum, theme) => sum + theme.weight, 0);
-
-        // Bancos de questões expandidos (30 questões por tema)
+        // Bancos de questões por tema
         const QUESTIONS_BANKS = {
-            lep: [
-                // 30 questões sobre LEP
+            tortura: [
                 {
                     id: 1,
-                    question: "Segundo o art. 10 da LEP, a assistência ao preso compreende:",
+                    question: "Segundo a Lei 9.455/97, constitui crime de tortura:",
                     options: [
-                        "Apenas assistência material e jurídica",
-                        "Material, à saúde, jurídica, educacional, social e religiosa",
-                        "Somente assistência médica e jurídica",
-                        "Apenas assistência social e educacional",
-                        "Material, jurídica e religiosa"
+                        "Apenas constranger alguém com emprego de violência física para obter informação",
+                        "Constranger alguém com emprego de violência ou grave ameaça, causando-lhe sofrimento físico ou mental",
+                        "Somente submeter alguém a intenso sofrimento físico como forma de castigo",
+                        "Constranger alguém apenas com emprego de violência, excluindo-se a grave ameaça",
+                        "Causar sofrimento físico ou mental apenas quando praticado por agente público"
                     ],
                     correctIndex: 1,
-                    explanation: "O art. 10 da Lei 7.210/84 estabelece que a assistência ao preso e ao internado é dever do Estado, compreendendo assistência material, à saúde, jurídica, educacional, social e religiosa."
+                    explanation: "O Art. 1º da Lei 9.455/97 define tortura como constranger alguém com emprego de violência OU grave ameaça, causando-lhe sofrimento físico OU mental."
                 },
                 {
                     id: 2,
-                    question: "A assistência material (art. 12) consiste no fornecimento de:",
+                    question: "A pena para o crime de tortura simples é de:",
                     options: [
-                        "Apenas alimentação",
-                        "Alimentação, vestuário e instalações higiênicas",
-                        "Somente vestuário e medicamentos",
-                        "Alimentação e assistência médica",
-                        "Apenas instalações adequadas"
+                        "Detenção de 1 a 3 anos",
+                        "Reclusão de 1 a 5 anos",
+                        "Reclusão de 2 a 8 anos",
+                        "Reclusão de 4 a 10 anos",
+                        "Detenção de 6 meses a 2 anos"
                     ],
-                    correctIndex: 1,
-                    explanation: "O art. 12 da LEP estabelece que a assistência material consistirá no fornecimento de alimentação, vestuário e instalações higiênicas."
+                    correctIndex: 2,
+                    explanation: "Segundo o Art. 1º da Lei 9.455/97, a pena para o crime de tortura é reclusão de 2 (dois) a 8 (oito) anos."
                 },
                 {
                     id: 3,
-                    question: "A assistência à saúde (art. 14) compreenderá atendimento:",
+                    question: "Se o crime de tortura resulta em morte, a pena aplicável é:",
                     options: [
-                        "Apenas médico",
-                        "Médico, farmacêutico e odontológico",
-                        "Somente médico e psicológico",
-                        "Médico e farmacêutico apenas",
-                        "Apenas emergencial"
+                        "Reclusão de 6 a 15 anos",
+                        "Reclusão de 8 a 16 anos",
+                        "Reclusão de 10 a 20 anos",
+                        "Reclusão de 12 a 30 anos",
+                        "Prisão perpétua"
                     ],
                     correctIndex: 1,
-                    explanation: "O art. 14 da LEP dispõe que a assistência à saúde compreenderá atendimento médico, farmacêutico e odontológico."
+                    explanation: "De acordo com o Art. 1º, § 3º da Lei 9.455/97, se da tortura resulta morte, a pena é de reclusão de 8 (oito) a 16 (dezesseis) anos."
                 },
                 {
                     id: 4,
-                    question: "A assistência jurídica (art. 15) será prestada por:",
+                    question: "Aquele que se omite em face da tortura, quando tinha o dever de evitá-la, incorre na pena de:",
                     options: [
-                        "Apenas advogados particulares",
-                        "Procuradores do Estado",
-                        "Defensoria Pública",
-                        "Promotores de Justiça",
-                        "Juízes de execução"
+                        "Reclusão de 2 a 8 anos",
+                        "Detenção de 1 a 4 anos",
+                        "Reclusão de 1 a 4 anos",
+                        "Detenção de 6 meses a 2 anos",
+                        "Não há previsão de pena para omissão"
                     ],
-                    correctIndex: 2,
-                    explanation: "O art. 15 estabelece que a assistência jurídica é exercida pela Defensoria Pública para presos sem recursos."
+                    correctIndex: 1,
+                    explanation: "Segundo o Art. 1º, § 2º da Lei 9.455/97, aquele que se omite em face da tortura, quando tinha o dever de evitá-la ou apurá-la, incorre na pena de detenção de 1 (um) a 4 (quatro) anos."
                 },
                 {
                     id: 5,
-                    question: "O ensino de 1º grau (fundamental) será:",
+                    question: "A pena é aumentada de um sexto até um terço se o crime de tortura é cometido:",
                     options: [
-                        "Opcional",
-                        "Obrigatório",
-                        "Apenas para menores",
-                        "Somente para primários",
-                        "Facultativo"
+                        "Apenas contra criança ou adolescente",
+                        "Contra gestante, criança, adolescente ou maior de 60 anos",
+                        "Somente contra pessoa com deficiência",
+                        "Contra gestante, criança, adolescente, maior de 60 anos ou pessoa com deficiência",
+                        "Apenas durante o período noturno"
                     ],
-                    correctIndex: 1,
-                    explanation: "O art. 18 da LEP determina que o ensino de 1º grau será obrigatório."
+                    correctIndex: 3,
+                    explanation: "O Art. 1º, § 4º, I da Lei 9.455/97 estabelece que a pena é aumentada de 1/6 a 1/3 se o crime é cometido contra criança, gestante, portador de deficiência, adolescente ou maior de 60 anos."
                 },
-                // Adicionar mais questões conforme necessário...
+                // Adicionar mais 15 questões de tortura...
                 {
                     id: 6,
-                    question: "O trabalho do preso será remunerado, não podendo ser inferior a:",
+                    question: "O crime de tortura é:",
                     options: [
-                        "1/4 do salário mínimo",
-                        "1/3 do salário mínimo",
-                        "1/2 do salário mínimo",
-                        "2/3 do salário mínimo",
-                        "3/4 do salário mínimo"
+                        "Afiançável e prescritível",
+                        "Inafiançável e prescritível",
+                        "Afiançável e imprescritível",
+                        "Inafiançável e imprescritível quando praticado por agente público",
+                        "Afiançável apenas quando não resulta morte"
+                    ],
+                    correctIndex: 3,
+                    explanation: "Segundo o Art. 1º, § 5º da Lei 9.455/97, o crime de tortura é inafiançável e imprescritível, quando cometido por agentes públicos contra pessoas sob sua guarda, poder ou autoridade."
+                },
+                {
+                    id: 7,
+                    question: "A condenação por tortura acarretará a perda do cargo público quando:",
+                    options: [
+                        "Em qualquer caso de tortura",
+                        "Apenas quando resulta morte",
+                        "Quando o agente for funcionário público",
+                        "Somente em caso de reincidência",
+                        "Quando cometida contra menor de idade"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O Art. 1º, § 6º da Lei 9.455/97 estabelece que a condenação acarretará a perda do cargo, função ou emprego público quando o agente for funcionário público."
+                },
+                {
+                    id: 8,
+                    question: "Para caracterizar tortura-prova (Art. 1º, I), é necessário:",
+                    options: [
+                        "Apenas o emprego de violência física",
+                        "Que seja praticado por agente público",
+                        "Finalidade específica de obter informação, declaração ou confissão",
+                        "Que resulte em lesão corporal",
+                        "Que seja praticado mediante sequestro"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O Art. 1º, I da Lei 9.455/97 define a tortura-prova, que exige finalidade específica de obter informação, declaração ou confissão da vítima ou de terceira pessoa."
+                },
+                {
+                    id: 9,
+                    question: "A tortura-castigo (Art. 1º, II) exige que a vítima esteja:",
+                    options: [
+                        "Presa em flagrante",
+                        "Sob a guarda, poder ou autoridade do agente",
+                        "Em estabelecimento prisional",
+                        "Sendo interrogada",
+                        "Cumprindo pena"
+                    ],
+                    correctIndex: 1,
+                    explanation: "A tortura-castigo exige que a vítima esteja sob a guarda, poder ou autoridade do agente, conforme previsto no Art. 1º, II da Lei 9.455/97."
+                },
+                {
+                    id: 10,
+                    question: "O sofrimento exigido para configurar tortura pode ser:",
+                    options: [
+                        "Apenas físico",
+                        "Apenas mental",
+                        "Físico ou mental",
+                        "Somente físico grave",
+                        "Apenas psicológico permanente"
+                    ],
+                    correctIndex: 2,
+                    explanation: "A Lei 9.455/97 prevê expressamente que o sofrimento pode ser físico OU mental, abrangendo ambas as modalidades."
+                },
+                {
+                    id: 11,
+                    question: "A tortura praticada por duas ou mais pessoas:",
+                    options: [
+                        "Não altera a pena base",
+                        "Aumenta a pena de 1/6 a 1/3",
+                        "Aumenta a pena de 1/3 a 1/2",
+                        "Dobra a pena",
+                        "Configura crime autônomo"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Segundo o Art. 1º, § 4º, II, quando cometida por duas ou mais pessoas, a pena é aumentada de 1/6 a 1/3."
+                },
+                {
+                    id: 12,
+                    question: "A Lei de Tortura aplica-se:",
+                    options: [
+                        "Apenas a agentes públicos",
+                        "Somente a particulares",
+                        "Tanto a agentes públicos quanto a particulares",
+                        "Apenas a militares",
+                        "Somente a autoridades policiais"
+                    ],
+                    correctIndex: 2,
+                    explanation: "A Lei 9.455/97 aplica-se tanto a agentes públicos quanto a particulares, conforme se depreende da leitura de seus dispositivos."
+                },
+                {
+                    id: 13,
+                    question: "Em relação à tentativa no crime de tortura:",
+                    options: [
+                        "Não é admitida",
+                        "É admitida e punida com a mesma pena",
+                        "É admitida e punida com pena reduzida",
+                        "Só é admitida na modalidade que resulta morte",
+                        "É considerada contravenção penal"
+                    ],
+                    correctIndex: 2,
+                    explanation: "A tentativa é admitida no crime de tortura e punida com a pena correspondente diminuída de 1/3 a 2/3, conforme as regras gerais do Código Penal."
+                },
+                {
+                    id: 14,
+                    question: "A grave ameaça mencionada na Lei de Tortura:",
+                    options: [
+                        "Deve ser sempre de morte",
+                        "Pode ser de qualquer mal injusto e grave",
+                        "Deve ser apenas de violência física",
+                        "Não configura tortura por si só",
+                        "Deve ser dirigida a terceiros"
+                    ],
+                    correctIndex: 1,
+                    explanation: "A grave ameaça pode ser de qualquer mal injusto e grave, não necessariamente de morte, desde que seja idônea a causar o constrangimento."
+                },
+                {
+                    id: 15,
+                    question: "O crime de tortura em relação à ação penal é:",
+                    options: [
+                        "De ação penal privada",
+                        "De ação penal pública condicionada",
+                        "De ação penal pública incondicionada",
+                        "De ação penal privada subsidiária",
+                        "Depende de representação da vítima"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O crime de tortura é de ação penal pública incondicionada, podendo o Ministério Público oferecer denúncia independentemente de representação."
+                },
+                {
+                    id: 16,
+                    question: "O bem jurídico tutelado pela Lei de Tortura é:",
+                    options: [
+                        "Apenas a integridade física",
+                        "Apenas a liberdade individual",
+                        "A dignidade da pessoa humana",
+                        "Apenas a integridade psíquica",
+                        "A administração pública"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O bem jurídico tutelado é a dignidade da pessoa humana, que engloba tanto a integridade física quanto psíquica e a liberdade individual."
+                },
+                {
+                    id: 17,
+                    question: "A prescrição do crime de tortura:",
+                    options: [
+                        "É sempre de 20 anos",
+                        "Segue as regras gerais do Código Penal",
+                        "Não ocorre quando praticado por agente público",
+                        "É de 12 anos em qualquer caso",
+                        "Não se aplica ao crime de tortura"
+                    ],
+                    correctIndex: 2,
+                    explanation: "Conforme o Art. 1º, § 5º, o crime de tortura é imprescritível quando cometido por agentes públicos contra pessoas sob sua guarda, poder ou autoridade."
+                },
+                {
+                    id: 18,
+                    question: "A tortura contra pessoa maior de 60 anos:",
+                    options: [
+                        "Tem a mesma pena da tortura simples",
+                        "É crime hediondo",
+                        "Tem pena aumentada de 1/6 a 1/3",
+                        "É da competência do Juizado Especial",
+                        "Configura crime contra o idoso"
+                    ],
+                    correctIndex: 2,
+                    explanation: "Conforme Art. 1º, § 4º, I, a tortura contra maior de 60 anos tem pena aumentada de 1/6 a 1/3."
+                },
+                {
+                    id: 19,
+                    question: "Em relação ao sujeito passivo da tortura:",
+                    options: [
+                        "Deve ser sempre maior de idade",
+                        "Pode ser qualquer pessoa",
+                        "Deve estar sob custódia",
+                        "Deve ser nacional brasileiro",
+                        "Deve ter capacidade civil plena"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Qualquer pessoa pode ser sujeito passivo do crime de tortura, independentemente de idade, nacionalidade ou capacidade civil."
+                },
+                {
+                    id: 20,
+                    question: "A prova obtida mediante tortura:",
+                    options: [
+                        "É válida se confirmada por outros meios",
+                        "É absolutamente inadmissível",
+                        "Pode ser usada apenas na defesa",
+                        "É válida em crimes hediondos",
+                        "Depende de decisão judicial"
+                    ],
+                    correctIndex: 1,
+                    explanation: "A Constituição Federal e a Lei de Tortura estabelecem que são inadmissíveis as provas obtidas por meios ilícitos, incluindo a tortura."
+                }
+            ],
+            
+            drogas: [
+                {
+                    id: 1,
+                    question: "Segundo o art. 28 da Lei 11.343/06, quem adquire, guarda ou porta drogas para consumo pessoal está sujeito às seguintes penas:",
+                    options: [
+                        "Detenção de 6 meses a 1 ano",
+                        "Advertência, prestação de serviços à comunidade ou medida educativa",
+                        "Reclusão de 1 a 3 anos",
+                        "Multa e prisão simples",
+                        "Apenas advertência verbal"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 28 da Lei 11.343/06 prevê penas não privativas de liberdade: advertência, prestação de serviços à comunidade e medida educativa de comparecimento a programa ou curso educativo."
+                },
+                {
+                    id: 2,
+                    question: "O crime do art. 33 da Lei de Drogas (tráfico) tem pena de:",
+                    options: [
+                        "Reclusão de 3 a 10 anos e multa",
+                        "Reclusão de 5 a 15 anos e pagamento de multa",
+                        "Detenção de 2 a 8 anos",
+                        "Reclusão de 4 a 12 anos e multa",
+                        "Detenção de 1 a 5 anos e multa"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Conforme o art. 33 da Lei 11.343/06, o tráfico de drogas tem pena de reclusão de 5 (cinco) a 15 (quinze) anos e pagamento de 500 a 1.500 dias-multa."
+                },
+                {
+                    id: 3,
+                    question: "Para diferenciar uso de tráfico de drogas, a lei considera:",
+                    options: [
+                        "Apenas a quantidade da droga",
+                        "Somente os antecedentes do agente",
+                        "A natureza e quantidade da substância, local, condições da apreensão, antecedentes e circunstâncias sociais e pessoais",
+                        "Apenas o local da apreensão",
+                        "Somente a confissão do agente"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O art. 28, § 2º da Lei 11.343/06 estabelece vários critérios para distinguir usuário de traficante: natureza e quantidade da substância, local e condições da ação, antecedentes e circunstâncias sociais e pessoais."
+                },
+                {
+                    id: 4,
+                    question: "O porte de drogas para consumo pessoal (art. 28):",
+                    options: [
+                        "É crime com pena de prisão",
+                        "É contravenção penal",
+                        "Não é mais crime, mas continua sendo ilícito",
+                        "Foi descriminalizado completamente",
+                        "É crime apenas se for reincidente"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O STF decidiu que o art. 28 não foi revogado, mas a conduta continua sendo ilícita, porém sem aplicação de pena privativa de liberdade."
+                },
+                {
+                    id: 5,
+                    question: "Induzir, instigar ou auxiliar alguém ao uso indevido de droga configura:",
+                    options: [
+                        "Tráfico de drogas (art. 33)",
+                        "Crime do art. 33, § 2º",
+                        "Uso de drogas (art. 28)",
+                        "Não é crime",
+                        "Contravenção penal"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 33, § 2º da Lei 11.343/06 criminaliza a conduta de induzir, instigar ou auxiliar alguém ao uso indevido de droga, com pena de detenção de 1 a 3 anos e multa."
+                },
+                // Adicionar mais 15 questões de drogas...
+                {
+                    id: 6,
+                    question: "A pena do tráfico de drogas pode ser reduzida de 1/6 a 2/3 quando:",
+                    options: [
+                        "O agente for primário",
+                        "O agente for primário, de bons antecedentes, não se dedicar a atividades criminosas nem integrar organização criminosa",
+                        "A quantidade for pequena",
+                        "Houver confissão",
+                        "O agente colaborar com a justiça"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 33, § 4º da Lei 11.343/06 permite a redução da pena quando o agente for primário, de bons antecedentes, não se dedicar a atividades criminosas nem integrar organização criminosa."
+                },
+                {
+                    id: 7,
+                    question: "O crime de tráfico de drogas é:",
+                    options: [
+                        "Afiançável e não hediondo",
+                        "Inafiançável e hediondo",
+                        "Afiançável mas hediondo",
+                        "Inafiançável mas não hediondo",
+                        "Depende da quantidade"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O tráfico de drogas é crime hediondo (Lei 8.072/90) e, portanto, inafiançável, insuscetível de graça ou anistia."
+                },
+                {
+                    id: 8,
+                    question: "Oferecer droga, eventualmente e sem objetivo de lucro, a pessoa de seu relacionamento, para juntos a consumirem:",
+                    options: [
+                        "É tráfico comum (art. 33)",
+                        "É tráfico privilegiado (art. 33, § 3º)",
+                        "É uso compartilhado (art. 28)",
+                        "Não é crime",
+                        "É contravenção"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 33, § 3º da Lei 11.343/06 prevê o tráfico privilegiado para quem oferece droga, eventualmente e sem objetivo de lucro, para consumo conjunto, com pena de detenção de 6 meses a 1 ano."
+                },
+                {
+                    id: 9,
+                    question: "A competência para julgar crimes da Lei de Drogas é:",
+                    options: [
+                        "Sempre da Justiça Federal",
+                        "Sempre da Justiça Estadual",
+                        "Da Justiça Federal quando há interesse da União",
+                        "Do Juizado Especial Criminal",
+                        "Da Justiça Militar"
+                    ],
+                    correctIndex: 2,
+                    explanation: "A competência segue as regras gerais: Justiça Federal quando há interesse da União (tráfico internacional, interestadual), Justiça Estadual nos demais casos."
+                },
+                {
+                    id: 10,
+                    question: "Para caracterizar o tráfico de drogas é necessário:",
+                    options: [
+                        "Apenas a posse da droga",
+                        "Venda efetiva da substância",
+                        "Uma das condutas típicas previstas no art. 33",
+                        "Habitualidade na conduta",
+                        "Finalidade de lucro"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O art. 33 prevê 18 verbos nucleares (importar, exportar, remeter, preparar, produzir, fabricar, adquirir, vender, expor à venda, oferecer, ter em depósito, transportar, trazer consigo, guardar, prescrever, ministrar, entregar, fornecer), bastando uma dessas condutas."
+                },
+                {
+                    id: 11,
+                    question: "O prazo para oferecimento da denúncia em crimes de tráfico de drogas é:",
+                    options: [
+                        "5 dias se o réu estiver preso",
+                        "10 dias se o réu estiver preso, 15 se solto",
+                        "15 dias em qualquer caso",
+                        "8 dias se preso, 15 se solto",
+                        "30 dias em qualquer caso"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Conforme o art. 54 da Lei 11.343/06, o prazo para oferecimento da denúncia é de 10 dias se o réu estiver preso e 15 dias se estiver solto."
+                },
+                {
+                    id: 12,
+                    question: "A prescrição nos crimes da Lei de Drogas:",
+                    options: [
+                        "Não ocorre",
+                        "Segue as regras do Código Penal",
+                        "É sempre de 20 anos",
+                        "É de 15 anos para tráfico",
+                        "Depende da quantidade da droga"
+                    ],
+                    correctIndex: 1,
+                    explanation: "A prescrição nos crimes da Lei de Drogas segue as regras gerais do Código Penal, calculada com base na pena máxima cominada."
+                },
+                {
+                    id: 13,
+                    question: "O financiamento ou custeio do tráfico de drogas:",
+                    options: [
+                        "Não é crime",
+                        "É equiparado ao tráfico (art. 33)",
+                        "É crime autônomo (art. 36)",
+                        "É lavagem de dinheiro",
+                        "É formação de quadrilha"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O art. 36 da Lei 11.343/06 criminaliza especificamente o financiamento ou custeio do tráfico de drogas, com pena de reclusão de 8 a 20 anos."
+                },
+                {
+                    id: 14,
+                    question: "Semear, cultivar ou fazer a colheita de plantas destinadas à preparação de drogas:",
+                    options: [
+                        "Não é crime se for para uso próprio",
+                        "É sempre tráfico (art. 33)",
+                        "É crime específico com pena diferenciada",
+                        "É contravenção penal",
+                        "Depende da quantidade plantada"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O cultivo está previsto no art. 33 da Lei 11.343/06 como uma das modalidades de tráfico, não havendo distinção para uso próprio."
+                },
+                {
+                    id: 15,
+                    question: "A colaboração premiada na Lei de Drogas:",
+                    options: [
+                        "Não é prevista",
+                        "Permite redução de pena de 1/3 a 2/3",
+                        "Só se aplica ao tráfico internacional",
+                        "Permite apenas perdão judicial",
+                        "Reduz a pena pela metade"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 41 da Lei 11.343/06 prevê redução de pena de 1/3 a 2/3 para quem colaborar voluntariamente com a investigação policial e o processo criminal."
+                },
+                {
+                    id: 16,
+                    question: "O tráfico de drogas praticado nas dependências ou imediações de estabelecimentos de ensino:",
+                    options: [
+                        "Tem a mesma pena",
+                        "Tem pena aumentada de 1/6 a 1/3",
+                        "Tem pena aumentada de 1/8 a 2/3",
+                        "Tem pena dobrada",
+                        "É crime hediondo qualificado"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O art. 40, III da Lei 11.343/06 prevê aumento de pena de 1/8 a 2/3 quando o crime é praticado nas dependências ou imediações de estabelecimentos de ensino."
+                },
+                {
+                    id: 17,
+                    question: "Para a aplicação da causa de diminuição do § 4º do art. 33:",
+                    options: [
+                        "Basta ser primário",
+                        "É necessário ser primário e de bons antecedentes",
+                        "É necessário ser primário, de bons antecedentes, não se dedicar a atividades criminosas nem integrar organização criminosa",
+                        "Basta não integrar organização criminosa",
+                        "É automática para qualquer réu"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O art. 33, § 4º exige cumulativamente: ser primário, ter bons antecedentes, não se dedicar a atividades criminosas e não integrar organização criminosa."
+                },
+                {
+                    id: 18,
+                    question: "O crime de associação para o tráfico (art. 35) tem pena de:",
+                    options: [
+                        "Reclusão de 2 a 6 anos",
+                        "Reclusão de 3 a 10 anos e pagamento de multa",
+                        "Detenção de 1 a 3 anos",
+                        "Reclusão de 5 a 15 anos",
+                        "Detenção de 6 meses a 2 anos"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 35 da Lei 11.343/06 estabelece pena de reclusão de 3 a 10 anos e pagamento de 700 a 1.200 dias-multa para a associação para o tráfico."
+                },
+                {
+                    id: 19,
+                    question: "A liberdade provisória nos crimes de tráfico de drogas:",
+                    options: [
+                        "É vedada em qualquer hipótese",
+                        "É possível mediante fiança",
+                        "É possível sem fiança se preenchidos os requisitos legais",
+                        "Só é possível para réus primários",
+                        "Depende da quantidade da droga"
+                    ],
+                    correctIndex: 2,
+                    explanation: "Embora o tráfico seja inafiançável, é possível a liberdade provisória sem fiança se preenchidos os requisitos do art. 44 da Lei 11.343/06."
+                },
+                {
+                    id: 20,
+                    question: "O procedimento especial da Lei de Drogas aplica-se:",
+                    options: [
+                        "A todos os crimes da lei",
+                        "Apenas ao tráfico",
+                        "Aos crimes dos arts. 33, 34, 35 e 36",
+                        "Apenas quando há flagrante",
+                        "Somente ao tráfico internacional"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O procedimento especial previsto nos arts. 54 a 59 da Lei 11.343/06 aplica-se aos crimes previstos nos arts. 33, 34, 35 e 36 da mesma lei."
+                }
+            ],
+            
+            desarmamento: [
+                {
+                    id: 1,
+                    question: "Segundo o art. 12 do Estatuto do Desarmamento, possuir ou manter sob sua guarda arma de fogo de uso permitido, em desacordo com determinação legal, tem pena de:",
+                    options: [
+                        "Detenção de 1 a 3 anos e multa",
+                        "Reclusão de 2 a 4 anos e multa",
+                        "Detenção de 6 meses a 2 anos e multa",
+                        "Reclusão de 1 a 3 anos e multa",
+                        "Detenção de 2 a 4 anos e multa"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 12 da Lei 10.826/03 estabelece pena de reclusão de 2 (dois) a 4 (quatro) anos, e multa, para posse irregular de arma de fogo de uso permitido."
+                },
+                {
+                    id: 2,
+                    question: "O crime do art. 13 (omissão de cautela) ocorre quando:",
+                    options: [
+                        "Se deixa de observar as cautelas necessárias para impedir que menor de 18 anos se apodere de arma de fogo",
+                        "Se deixa de observar as cautelas necessárias para impedir que menor de 21 anos se apodere de arma de fogo",
+                        "Se deixa de observar as cautelas necessárias para impedir que menor de 16 anos se apodere de arma de fogo",
+                        "Se deixa arma destravada",
+                        "Se não guarda a arma em cofre"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 13 da Lei 10.826/03 criminaliza deixar de observar as cautelas necessárias para impedir que menor de 18 anos se apodere de arma de fogo que esteja sob sua posse ou guarda."
+                },
+                {
+                    id: 3,
+                    question: "A pena do crime de omissão de cautela (art. 13) é:",
+                    options: [
+                        "Detenção de 1 a 2 anos e multa",
+                        "Reclusão de 1 a 2 anos e multa",
+                        "Detenção de 6 meses a 2 anos e multa",
+                        "Detenção de 1 a 3 anos e multa",
+                        "Reclusão de 2 a 4 anos e multa"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 13 da Lei 10.826/03 prevê pena de detenção de 1 (um) a 2 (dois) anos, e multa, para o crime de omissão de cautela."
+                },
+                {
+                    id: 4,
+                    question: "Portar arma de fogo de uso permitido (art. 14) tem pena de:",
+                    options: [
+                        "Detenção de 1 a 3 anos e multa",
+                        "Reclusão de 2 a 4 anos e multa",
+                        "Detenção de 2 a 4 anos e multa",
+                        "Reclusão de 1 a 3 anos e multa",
+                        "Detenção de 6 meses a 2 anos e multa"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O art. 14 da Lei 10.826/03 estabelece pena de detenção de 2 (dois) a 4 (quatro) anos, e multa, para porte ilegal de arma de fogo de uso permitido."
+                },
+                {
+                    id: 5,
+                    question: "O disparo de arma de fogo (art. 15) tem pena de:",
+                    options: [
+                        "Reclusão de 2 a 4 anos e multa",
+                        "Detenção de 1 a 3 anos e multa",
+                        "Reclusão de 1 a 3 anos e multa",
+                        "Detenção de 6 meses a 2 anos e multa",
+                        "Detenção de 2 a 4 anos e multa"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 15 da Lei 10.826/03 prevê pena de reclusão de 2 (dois) a 4 (quatro) anos, e multa, para disparar arma de fogo ou acionar munição em lugar habitado ou em suas adjacências."
+                },
+                // Adicionar mais 15 questões de desarmamento...
+                {
+                    id: 6,
+                    question: "Produzir, recarregar ou reciclar munição sem autorização (art. 16) tem pena de:",
+                    options: [
+                        "Reclusão de 4 a 8 anos e multa",
+                        "Detenção de 2 a 4 anos e multa",
+                        "Reclusão de 3 a 6 anos e multa",
+                        "Detenção de 1 a 4 anos e multa",
+                        "Reclusão de 2 a 5 anos e multa"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 16 da Lei 10.826/03 estabelece pena de reclusão de 4 (quatro) a 8 (oito) anos, e multa, para produzir, recarregar ou reciclar munição sem autorização."
+                },
+                {
+                    id: 7,
+                    question: "Possuir, deter, portar, adquirir, fornecer, receber, ter em depósito, transportar, ceder arma de fogo de uso restrito (art. 16) tem pena de:",
+                    options: [
+                        "Reclusão de 3 a 6 anos e multa",
+                        "Reclusão de 4 a 8 anos e multa",
+                        "Detenção de 2 a 4 anos e multa",
+                        "Reclusão de 2 a 5 anos e multa",
+                        "Reclusão de 5 a 10 anos e multa"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 16 da Lei 10.826/03 prevê pena de reclusão de 3 (três) a 6 (seis) anos, e multa, para os crimes envolvendo arma de fogo de uso restrito."
+                },
+                {
+                    id: 8,
+                    question: "Adquirir, fornecer, receber, ter em depósito, transportar, ceder ou vender arma de fogo de uso permitido (art. 17) tem pena de:",
+                    options: [
+                        "Reclusão de 4 a 8 anos e multa",
+                        "Detenção de 2 a 4 anos e multa",
+                        "Reclusão de 3 a 6 anos e multa",
+                        "Reclusão de 2 a 5 anos e multa",
+                        "Detenção de 1 a 3 anos e multa"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 17 da Lei 10.826/03 estabelece pena de reclusão de 4 (quatro) a 8 (oito) anos, e multa, para comércio ilegal de arma de fogo de uso permitido."
+                },
+                {
+                    id: 9,
+                    question: "Fornecer, receber, ter em depósito, transportar, ceder ou vender munição (art. 17) tem pena de:",
+                    options: [
+                        "Reclusão de 4 a 8 anos e multa",
+                        "Reclusão de 6 a 12 anos e multa",
+                        "Detenção de 2 a 4 anos e multa",
+                        "Reclusão de 3 a 6 anos e multa",
+                        "Reclusão de 2 a 5 anos e multa"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 17, parágrafo único da Lei 10.826/03 prevê pena de reclusão de 6 (seis) a 12 (doze) anos, e multa, para comércio ilegal de munição."
+                },
+                {
+                    id: 10,
+                    question: "Importar, exportar, favorecer a entrada ou saída do território nacional arma de fogo (art. 18) tem pena de:",
+                    options: [
+                        "Reclusão de 4 a 8 anos e multa",
+                        "Reclusão de 6 a 12 anos e multa",
+                        "Reclusão de 8 a 15 anos e multa",
+                        "Reclusão de 4 a 10 anos e multa",
+                        "Reclusão de 3 a 6 anos e multa"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 18 da Lei 10.826/03 estabelece pena de reclusão de 4 (quatro) a 8 (oito) anos, e multa, para tráfico internacional de arma de fogo."
+                },
+                {
+                    id: 11,
+                    question: "A diferença entre posse (art. 12) e porte (art. 14) de arma de fogo é:",
+                    options: [
+                        "Não há diferença legal",
+                        "Posse é ter a arma em casa, porte é levá-la fora de casa",
+                        "Posse é crime mais grave",
+                        "Porte só se configura se a arma estiver carregada",
+                        "Posse exige registro, porte não"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Posse (art. 12) é ter a arma no interior da residência ou dependência desta, ou local de trabalho. Porte (art. 14) é transportar a arma fora desses locais."
+                },
+                {
+                    id: 12,
+                    question: "Os crimes do Estatuto do Desarmamento são:",
+                    options: [
+                        "Todos afiançáveis",
+                        "Todos inafiançáveis",
+                        "Inafiançáveis apenas os de uso restrito",
+                        "Afiançáveis apenas posse e porte",
+                        "Depende da pena aplicada"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 21 da Lei 10.826/03 estabelece que os crimes previstos nesta Lei são inafiançáveis, com exceção da posse e porte para uso próprio."
+                },
+                {
+                    id: 13,
+                    question: "A entrega voluntária de arma de fogo à autoridade competente:",
+                    options: [
+                        "Não isenta de pena",
+                        "Reduz a pena pela metade",
+                        "Isenta de pena se feita durante campanha oficial",
+                        "Reduz a pena de 1/3 a 2/3",
+                        "Permite transação penal"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O art. 30 da Lei 10.826/03 estabelece que a entrega voluntária de arma de fogo durante campanha de entrega isenta o possuidor das penas previstas."
+                },
+                {
+                    id: 14,
+                    question: "Para caracterizar o crime de posse irregular (art. 12) é necessário:",
+                    options: [
+                        "Que a arma esteja carregada",
+                        "Que esteja em desacordo com determinação legal ou regulamentar",
+                        "Que seja de uso restrito",
+                        "Que tenha sido furtada",
+                        "Que esteja sem numeração"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 12 exige que a posse ou guarda esteja 'em desacordo com determinação legal ou regulamentar', ou seja, sem a devida autorização."
+                },
+                {
+                    id: 15,
+                    question: "O crime de disparo de arma de fogo (art. 15) exige:",
+                    options: [
+                        "Que cause lesão em alguém",
+                        "Que seja em lugar habitado ou suas adjacências",
+                        "Que seja durante a noite",
+                        "Que cause dano ao patrimônio",
+                        "Que seja com dolo de matar"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 15 criminaliza disparar arma de fogo ou acionar munição em lugar habitado ou em suas adjacências, independentemente de resultado lesivo."
+                },
+                {
+                    id: 16,
+                    question: "A competência para julgar crimes do Estatuto do Desarmamento é:",
+                    options: [
+                        "Sempre da Justiça Federal",
+                        "Sempre da Justiça Estadual",
+                        "Da Justiça Federal quando há interesse da União",
+                        "Do Juizado Especial Criminal",
+                        "Da Justiça Militar"
+                    ],
+                    correctIndex: 2,
+                    explanation: "A competência segue as regras gerais: Justiça Federal quando há interesse da União (tráfico internacional, armas das Forças Armadas), Justiça Estadual nos demais casos."
+                },
+                {
+                    id: 17,
+                    question: "A pena dos crimes do Estatuto do Desarmamento pode ser aumentada quando:",
+                    options: [
+                        "Cometido por funcionário público",
+                        "Cometido durante a noite",
+                        "A arma for de uso restrito",
+                        "Houver concurso de pessoas",
+                        "Não há previsão de aumento"
                     ],
                     correctIndex: 4,
-                    explanation: "O art. 29 estabelece que a remuneração não pode ser inferior a 3/4 do salário mínimo."
+                    explanation: "O Estatuto do Desarmamento não prevê causas gerais de aumento de pena, diferentemente de outras leis penais especiais."
+                },
+                {
+                    id: 18,
+                    question: "O crime de omissão de cautela (art. 13) é:",
+                    options: [
+                        "Crime doloso",
+                        "Crime culposo",
+                        "Crime preterdoloso",
+                        "Pode ser doloso ou culposo",
+                        "Contravenção penal"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O crime do art. 13 é tipicamente culposo, punindo-se a negligência em observar as cautelas necessárias para impedir que menor se aposse da arma."
+                },
+                {
+                    id: 19,
+                    question: "Para aplicação das penas do Estatuto do Desarmamento:",
+                    options: [
+                        "Não se aplica a Lei 9.099/95",
+                        "Aplica-se integralmente a Lei 9.099/95",
+                        "Aplica-se parcialmente a Lei 9.099/95",
+                        "Só se aplica para posse e porte",
+                        "Depende da pena cominada"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 21 da Lei 10.826/03 veda expressamente a aplicação da Lei 9.099/95 aos crimes previstos no Estatuto do Desarmamento."
+                },
+                {
+                    id: 20,
+                    question: "A destruição de arma de fogo apreendida:",
+                    options: [
+                        "Só pode ocorrer após o trânsito em julgado",
+                        "Pode ocorrer imediatamente após perícia",
+                        "Depende de autorização judicial",
+                        "É obrigatória em 48 horas",
+                        "Não é permitida"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 25 da Lei 10.826/03 permite a destruição de arma de fogo apreendida após a realização de perícia criminal, independentemente de decisão judicial."
                 }
             ],
             
@@ -1112,119 +1370,519 @@
                         "Somente agentes com poder de polícia"
                     ],
                     correctIndex: 1,
-                    explanation: "O art. 1º define autoridade como qualquer agente público, servidor ou não, de qualquer dos Poderes."
-                }
-            ],
-            
-            tortura: [
+                    explanation: "O art. 1º da Lei 13.869/19 define autoridade como qualquer agente público, servidor ou não, da administração direta, indireta ou fundacional de qualquer dos Poderes da União, dos Estados, do Distrito Federal, dos Municípios e de Território, compreendendo, também, os integrantes de corporações militares e bombeiros militares."
+                },
                 {
-                    id: 1,
-                    question: "A Lei 9.455/97 define tortura como:",
+                    id: 2,
+                    question: "O crime de decretar medida de privação de liberdade em manifesta desconformidade com as hipóteses legais (art. 1º) tem pena de:",
                     options: [
-                        "Apenas violência física",
-                        "Constranger com violência ou grave ameaça causando sofrimento físico ou mental",
-                        "Somente sofrimento físico",
-                        "Apenas por agente público",
-                        "Somente em estabelecimentos prisionais"
-                    ],
-                    correctIndex: 1,
-                    explanation: "O art. 1º define tortura como constrangimento com violência ou grave ameaça causando sofrimento físico ou mental."
-                }
-            ],
-            
-            drogas: [
-                {
-                    id: 1,
-                    question: "O art. 28 da Lei 11.343/06 prevê para uso de drogas:",
-                    options: [
-                        "Detenção",
-                        "Advertência, prestação de serviços ou medida educativa",
-                        "Reclusão",
-                        "Multa e prisão",
-                        "Apenas advertência"
-                    ],
-                    correctIndex: 1,
-                    explanation: "O art. 28 prevê penas não privativas de liberdade."
-                }
-            ],
-            
-            desarmamento: [
-                {
-                    id: 1,
-                    question: "Possuir arma de fogo irregularmente tem pena de:",
-                    options: [
-                        "Detenção de 1 a 3 anos",
-                        "Reclusão de 2 a 4 anos",
+                        "Detenção de 1 a 4 anos",
+                        "Reclusão de 1 a 4 anos",
                         "Detenção de 6 meses a 2 anos",
-                        "Reclusão de 1 a 3 anos",
-                        "Detenção de 2 a 4 anos"
+                        "Reclusão de 2 a 8 anos",
+                        "Detenção de 2 a 8 anos"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 1º da Lei 13.869/19 estabelece pena de detenção de 1 (um) a 4 (quatro) anos para decretar medida de privação de liberdade em manifesta desconformidade com as hipóteses legais."
+                },
+                {
+                    id: 3,
+                    question: "Submeter pessoa sob sua guarda ou custódia a vexame ou constrangimento não autorizado em lei (art. 2º) tem pena de:",
+                    options: [
+                        "Detenção de 1 a 4 anos",
+                        "Detenção de 6 meses a 3 anos",
+                        "Reclusão de 1 a 4 anos",
+                        "Detenção de 3 meses a 1 ano",
+                        "Reclusão de 6 meses a 2 anos"
+                    ],
+                    correctIndex: 3,
+                    explanation: "O art. 2º da Lei 13.869/19 prevê pena de detenção de 3 (três) meses a 1 (um) ano para submeter pessoa sob sua guarda ou custódia a vexame ou constrangimento não autorizado em lei."
+                },
+                {
+                    id: 4,
+                    question: "Proceder à prisão sabendo que a ordem de prisão é ilegal (art. 3º) tem pena de:",
+                    options: [
+                        "Detenção de 1 a 4 anos",
+                        "Reclusão de 1 a 4 anos",
+                        "Detenção de 6 meses a 2 anos",
+                        "Detenção de 3 meses a 2 anos",
+                        "Reclusão de 6 meses a 3 anos"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 3º da Lei 13.869/19 estabelece pena de detenção de 1 (um) a 4 (quatro) anos para proceder à prisão sabendo que a ordem de prisão é ilegal ou deixar de relaxar prisão ilegal que lhe seja comunicada."
+                },
+                {
+                    id: 5,
+                    question: "Ordenar ou executar busca pessoal, domiciliar, apreensão de documento ou outras diligências de forma manifestamente ilegal (art. 4º) tem pena de:",
+                    options: [
+                        "Detenção de 6 meses a 2 anos",
+                        "Detenção de 1 a 4 anos",
+                        "Reclusão de 1 a 4 anos",
+                        "Detenção de 3 meses a 1 ano",
+                        "Reclusão de 6 meses a 3 anos"
                     ],
                     correctIndex: 1,
-                    explanation: "O art. 12 estabelece pena de reclusão de 2 a 4 anos."
-                }
-            ],
-            
-            dudh: [
+                    explanation: "O art. 4º da Lei 13.869/19 prevê pena de detenção de 1 (um) a 4 (quatro) anos para ordenar ou executar busca pessoal, domiciliar, apreensão de documento ou outras diligências de forma manifestamente ilegal."
+                },
+                // Adicionar mais 15 questões de abuso de autoridade...
                 {
-                    id: 1,
-                    question: "Segundo o art. 1º da DUDH, todos os seres humanos nascem:",
+                    id: 6,
+                    question: "Divulgar gravação ou imagem de interrogatório ou oitiva sem justa causa (art. 5º) tem pena de:",
                     options: [
-                        "Livres apenas",
-                        "Iguais apenas",
-                        "Livres e iguais em dignidade e direitos",
-                        "Com direitos diferentes",
-                        "Sem direitos"
+                        "Detenção de 6 meses a 2 anos e multa",
+                        "Detenção de 1 a 4 anos e multa",
+                        "Reclusão de 1 a 4 anos e multa",
+                        "Detenção de 3 meses a 1 ano e multa",
+                        "Reclusão de 6 meses a 3 anos e multa"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 5º da Lei 13.869/19 estabelece pena de detenção de 6 (seis) meses a 2 (dois) anos, e multa, para divulgar gravação ou imagem de interrogatório, oitiva ou audiência sem justa causa."
+                },
+                {
+                    id: 7,
+                    question: "Para caracterizar abuso de autoridade é necessário:",
+                    options: [
+                        "Apenas o exercício irregular da função",
+                        "Dolo específico de prejudicar alguém ou beneficiar a si mesmo ou terceiro",
+                        "Culpa grave no exercício da função",
+                        "Qualquer irregularidade funcional",
+                        "Apenas excesso de poder"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 1º, § 1º da Lei 13.869/19 exige que as condutas sejam praticadas pelo agente com a finalidade específica de prejudicar outrem ou beneficiar a si mesmo ou a terceiro, ou, ainda, por mero capricho ou satisfação pessoal."
+                },
+                {
+                    id: 8,
+                    question: "A ação penal nos crimes de abuso de autoridade é:",
+                    options: [
+                        "Privada",
+                        "Pública incondicionada",
+                        "Pública condicionada à representação",
+                        "Pública condicionada à requisição do Ministro da Justiça",
+                        "Depende da gravidade do crime"
                     ],
                     correctIndex: 2,
-                    explanation: "O art. 1º estabelece que todos nascem livres e iguais em dignidade e direitos."
+                    explanation: "O art. 17 da Lei 13.869/19 estabelece que a ação penal é pública condicionada à representação, salvo quando a vítima for menor de 18 anos, pessoa com deficiência mental ou não tiver condições de oferecer a representação."
+                },
+                {
+                    id: 9,
+                    question: "O prazo para oferecimento da representação é de:",
+                    options: [
+                        "30 dias",
+                        "60 dias",
+                        "6 meses",
+                        "1 ano",
+                        "2 anos"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O art. 17, § 1º da Lei 13.869/19 estabelece que o direito de representação pode ser exercido no prazo de 6 (seis) meses, contado do dia em que a vítima tomar conhecimento da autoria do crime."
+                },
+                {
+                    id: 10,
+                    question: "A pena de perda do cargo é:",
+                    options: [
+                        "Automática em caso de condenação",
+                        "Efeito da condenação se aplicada pena privativa de liberdade sem sursis",
+                        "Depende de decisão específica do juiz",
+                        "Só se aplica a funcionários públicos",
+                        "Não está prevista na lei"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 6º da Lei 13.869/19 estabelece que a perda do cargo, mandato ou função pública é efeito da condenação quando aplicada pena privativa de liberdade por tempo igual ou superior a 1 ano, sem sursis."
+                },
+                {
+                    id: 11,
+                    question: "Impedir, sem justa causa, o acesso de advogado a cliente preso ou detido:",
+                    options: [
+                        "Não é crime",
+                        "É crime com pena de detenção de 6 meses a 2 anos",
+                        "É contravenção penal",
+                        "É crime apenas se causar prejuízo",
+                        "É infração disciplinar"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Embora não esteja explicitamente nos primeiros artigos citados, a Lei 13.869/19 criminaliza diversas condutas que violam direitos fundamentais, incluindo o direito de defesa."
+                },
+                {
+                    id: 12,
+                    question: "A Lei de Abuso de Autoridade revogou:",
+                    options: [
+                        "Toda a Lei 4.898/65",
+                        "Apenas os crimes da Lei 4.898/65",
+                        "Não revogou nenhuma lei anterior",
+                        "Apenas os artigos penais da Lei 4.898/65",
+                        "Toda legislação anterior sobre o tema"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 43 da Lei 13.869/19 revogou expressamente os arts. 3º e 4º da Lei 4.898/65, que tipificavam os crimes de abuso de autoridade, mantendo as demais disposições."
+                },
+                {
+                    id: 13,
+                    question: "O elemento subjetivo nos crimes de abuso de autoridade é:",
+                    options: [
+                        "Dolo genérico",
+                        "Dolo específico",
+                        "Culpa",
+                        "Preterdolo",
+                        "Dolo eventual"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Os crimes de abuso de autoridade exigem dolo específico, ou seja, a finalidade específica de prejudicar outrem ou beneficiar a si mesmo ou terceiro, ou por mero capricho."
+                },
+                {
+                    id: 14,
+                    question: "A competência para julgar crimes de abuso de autoridade é:",
+                    options: [
+                        "Sempre do Tribunal de Justiça",
+                        "Determinada conforme as regras gerais de competência",
+                        "Sempre da Justiça Federal",
+                        "Do Superior Tribunal de Justiça",
+                        "Da Justiça Militar"
+                    ],
+                    correctIndex: 1,
+                    explanation: "A competência segue as regras constitucionais gerais, variando conforme a autoridade que praticou o crime (foro por prerrogativa de função ou competência comum)."
+                },
+                {
+                    id: 15,
+                    question: "Exigir informação ou cumprimento de obrigação, inclusive o dever de fazer ou não fazer, sem expresso amparo legal:",
+                    options: [
+                        "Não é crime se a exigência for razoável",
+                        "É crime de abuso de autoridade",
+                        "É apenas infração administrativa",
+                        "Só é crime se causar prejuízo",
+                        "É contravenção penal"
+                    ],
+                    correctIndex: 1,
+                    explanation: "A Lei 13.869/19 tipifica como crime de abuso de autoridade exigir informação ou cumprimento de obrigação sem amparo legal."
+                },
+                {
+                    id: 16,
+                    question: "A prescrição dos crimes de abuso de autoridade:",
+                    options: [
+                        "Segue as regras gerais do Código Penal",
+                        "É de 4 anos para todos os crimes",
+                        "É imprescritível",
+                        "É de 2 anos",
+                        "Depende da pena aplicada"
+                    ],
+                    correctIndex: 0,
+                    explanation: "A prescrição dos crimes de abuso de autoridade segue as regras gerais do Código Penal, calculada com base na pena máxima cominada para cada crime."
+                },
+                {
+                    id: 17,
+                    question: "Negar cumprimento a decisão judicial, quando claramente contrária à lei ou à evidência dos autos:",
+                    options: [
+                        "É sempre crime",
+                        "Não é crime se a decisão for manifestamente ilegal",
+                        "É crime apenas se causar prejuízo",
+                        "É infração disciplinar",
+                        "Depende da hierarquia do juiz"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 4º, § 2º da Lei 13.869/19 estabelece que não constitui crime quando a decisão judicial for manifestamente contrária à lei ou à evidência dos autos."
+                },
+                {
+                    id: 18,
+                    question: "A Lei 13.869/19 entrou em vigor:",
+                    options: [
+                        "Imediatamente após a publicação",
+                        "30 dias após a publicação",
+                        "60 dias após a publicação",
+                        "90 dias após a publicação",
+                        "1 ano após a publicação"
+                    ],
+                    correctIndex: 2,
+                    explanation: "A Lei 13.869/19 entrou em vigor 60 dias após sua publicação oficial, conforme estabelecido em seu art. 44."
+                },
+                {
+                    id: 19,
+                    question: "Interceptar ou interromper serviço telegráfico, radioelétrico ou telefônico sem justa causa:",
+                    options: [
+                        "Não é crime de abuso de autoridade",
+                        "É crime com pena específica na Lei 13.869/19",
+                        "É apenas crime contra a incolumidade pública",
+                        "Só é crime se for habitual",
+                        "É contravenção penal"
+                    ],
+                    correctIndex: 1,
+                    explanation: "A Lei 13.869/19 tipifica como crime de abuso de autoridade diversas condutas que violam direitos fundamentais, incluindo a interceptação indevida de comunicações."
+                },
+                {
+                    id: 20,
+                    question: "O princípio da insignificância aplica-se aos crimes de abuso de autoridade:",
+                    options: [
+                        "Sempre",
+                        "Nunca",
+                        "Apenas nos crimes com pena menor",
+                        "Excepcionalmente, quando preenchidos os requisitos",
+                        "Só para funcionários primários"
+                    ],
+                    correctIndex: 3,
+                    explanation: "O princípio da insignificância pode ser aplicado excepcionalmente aos crimes de abuso de autoridade, desde que preenchidos todos os requisitos jurisprudenciais (mínima ofensividade, nenhuma periculosidade social, reduzido grau de reprovabilidade e inexpressividade da lesão jurídica)."
                 }
             ],
             
-            mandela: [
+            execucao_penal: [
                 {
                     id: 1,
-                    question: "As Regras de Mandela tratam de:",
+                    question: "Segundo o art. 10 da LEP, a assistência ao preso compreende:",
+                    options: [
+                        "Apenas assistência material e jurídica",
+                        "Material, à saúde, jurídica, educacional, social e religiosa",
+                        "Somente assistência médica e jurídica",
+                        "Apenas assistência social e educacional",
+                        "Material, jurídica e religiosa"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 10 da Lei 7.210/84 estabelece que a assistência ao preso e ao internado é dever do Estado, objetivando prevenir o crime e orientar o retorno à convivência em sociedade, compreendendo assistência material, à saúde, jurídica, educacional, social e religiosa."
+                },
+                {
+                    id: 2,
+                    question: "A assistência material (art. 12) consiste no fornecimento de:",
                     options: [
                         "Apenas alimentação",
-                        "Tratamento de presos",
-                        "Somente higiene",
-                        "Apenas punições",
-                        "Somente visitação"
+                        "Alimentação, vestuário e instalações higiênicas",
+                        "Somente vestuário e medicamentos",
+                        "Alimentação e assistência médica",
+                        "Apenas instalações adequadas"
                     ],
                     correctIndex: 1,
-                    explanation: "As Regras estabelecem padrões mínimos para tratamento de presos."
-                }
-            ],
-            
-            san_jose: [
+                    explanation: "O art. 12 da LEP estabelece que a assistência material ao preso e ao internado consistirá no fornecimento de alimentação, vestuário e instalações higiênicas."
+                },
                 {
-                    id: 1,
-                    question: "O Pacto de San José trata de:",
+                    id: 3,
+                    question: "A assistência à saúde do preso (art. 14) compreenderá atendimento:",
                     options: [
-                        "Direitos trabalhistas",
-                        "Direitos humanos",
-                        "Direitos comerciais",
-                        "Direitos ambientais",
-                        "Direitos autorais"
+                        "Apenas médico",
+                        "Médico, farmacêutico e odontológico",
+                        "Somente médico e psicológico",
+                        "Médico e farmacêutico apenas",
+                        "Apenas emergencial"
                     ],
                     correctIndex: 1,
-                    explanation: "O Pacto é a Convenção Americana sobre Direitos Humanos."
-                }
-            ],
-            
-            direito: [
+                    explanation: "O art. 14 da LEP dispõe que a assistência à saúde do preso e do internado de caráter preventivo e curativo compreenderá atendimento médico, farmacêutico e odontológico."
+                },
                 {
-                    id: 1,
-                    question: "O art. 5º da CF trata de:",
+                    id: 4,
+                    question: "A assistência jurídica (art. 15) será prestada pelos:",
                     options: [
-                        "Organização do Estado",
-                        "Direitos e garantias fundamentais",
-                        "Ordem econômica",
-                        "Segurança pública",
-                        "Poder Judiciário"
+                        "Apenas por advogados particulares",
+                        "Procuradores do Estado",
+                        "Procuradores especializados da Defensoria Pública",
+                        "Promotores de Justiça",
+                        "Juízes de execução"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O art. 15 da LEP estabelece que a assistência jurídica é destinada aos presos e aos internados sem recursos financeiros para constituir advogado, sendo exercida pela Defensoria Pública, dentro e fora dos estabelecimentos penais."
+                },
+                {
+                    id: 5,
+                    question: "A instrução escolar do preso (art. 18) será de nível:",
+                    options: [
+                        "Apenas alfabetização",
+                        "Fundamental obrigatório e médio",
+                        "Somente fundamental",
+                        "Fundamental, médio e superior",
+                        "Apenas profissionalizante"
                     ],
                     correctIndex: 1,
-                    explanation: "O art. 5º estabelece direitos e garantias fundamentais."
+                    explanation: "O art. 18 da LEP determina que o ensino de 1º grau (fundamental) será obrigatório, integrando-se no sistema escolar da Unidade Federativa, e o ensino profissional será ministrado em nível de iniciação ou de aperfeiçoamento técnico."
+                },
+                // Adicionar mais 15 questões de execução penal...
+                {
+                    id: 6,
+                    question: "O ensino profissional (art. 19) será ministrado em nível de:",
+                    options: [
+                        "Apenas iniciação",
+                        "Iniciação ou aperfeiçoamento técnico",
+                        "Somente aperfeiçoamento",
+                        "Superior técnico",
+                        "Básico e avançado"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 19 da LEP estabelece que o ensino profissional será ministrado em nível de iniciação ou de aperfeiçoamento técnico."
+                },
+                {
+                    id: 7,
+                    question: "As atividades educacionais podem ser objeto de:",
+                    options: [
+                        "Apenas remição de pena",
+                        "Convênio com entidades públicas ou particulares",
+                        "Somente parcerias públicas",
+                        "Apenas atividades internas",
+                        "Não há previsão legal"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 20 da LEP permite que as atividades educacionais possam ser objeto de convênio com entidades públicas ou particulares, que instalem escolas ou ofereçam cursos especializados."
+                },
+                {
+                    id: 8,
+                    question: "Em atendimento às condições locais, a administração penitenciária promoverá a prestação de assistência religiosa aos presos, permitindo-lhes a participação nos serviços organizados no estabelecimento penal, bem como a posse de livros de instrução religiosa. Esta previsão está no:",
+                    options: [
+                        "Art. 22",
+                        "Art. 23",
+                        "Art. 24",
+                        "Art. 25",
+                        "Art. 26"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O art. 24 da LEP estabelece a assistência religiosa, permitindo a participação em serviços religiosos e a posse de livros de instrução religiosa."
+                },
+                {
+                    id: 9,
+                    question: "A assistência social (art. 22) tem por finalidade:",
+                    options: [
+                        "Apenas amparar o preso",
+                        "Amparar o preso e preparar o seu retorno à liberdade",
+                        "Somente preparar a família",
+                        "Apenas orientação jurídica",
+                        "Somente assistência material"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 22 da LEP dispõe que a assistência social tem por finalidade amparar o preso e o internado e prepará-los para o retorno à liberdade."
+                },
+                {
+                    id: 10,
+                    question: "Incumbe ao serviço de assistência social (art. 23):",
+                    options: [
+                        "Apenas conhecer os resultados dos diagnósticos",
+                        "Conhecer os resultados dos diagnósticos e exames, relatar sobre o preso, acompanhar o resultado das permissões de saída e da prisão domiciliar, promover a obtenção de documentos, orientar e amparar a família, promover a obtenção de trabalho e colaborar no tratamento dos apenados",
+                        "Somente orientar a família",
+                        "Apenas promover trabalho",
+                        "Somente acompanhar permissões"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 23 da LEP estabelece várias incumbências do serviço de assistência social, incluindo conhecer diagnósticos, relatar sobre o preso, acompanhar saídas, promover documentação, orientar família, obter trabalho e colaborar no tratamento."
+                },
+                {
+                    id: 11,
+                    question: "O direito do preso à assistência material inclui:",
+                    options: [
+                        "Apenas alimentação adequada",
+                        "Alimentação, vestuário e instalações higiênicas",
+                        "Somente vestuário",
+                        "Apenas instalações",
+                        "Alimentação e medicamentos"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Conforme o art. 12 da LEP, a assistência material consistirá no fornecimento de alimentação, vestuário e instalações higiênicas."
+                },
+                {
+                    id: 12,
+                    question: "A assistência à saúde será prestada em estabelecimento penal ou, quando necessário, em outro local, mediante autorização:",
+                    options: [
+                        "Do diretor do estabelecimento",
+                        "Do juiz competente",
+                        "Do Ministério Público",
+                        "Da Defensoria Pública",
+                        "Do médico responsável"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 14, § 2º da LEP estabelece que quando o estabelecimento penal não estiver aparelhado para prover a assistência médica necessária, esta será prestada em outro local mediante autorização da direção do estabelecimento."
+                },
+                {
+                    id: 13,
+                    question: "O preso tem direito a chamamento nominal e será:",
+                    options: [
+                        "Tratado apenas pelo nome",
+                        "Identificado pelo número da cela",
+                        "Tratado com dignidade",
+                        "Chamado pelo crime cometido",
+                        "Identificado apenas por número"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 41, XI da LEP assegura ao preso o direito ao chamamento nominal, vedando o uso de número ou designação diversa."
+                },
+                {
+                    id: 14,
+                    question: "A remição de pena pelo estudo (art. 126) permite que:",
+                    options: [
+                        "1 dia de pena seja remido por 12 horas de estudo",
+                        "1 dia de pena seja remido por 8 horas de estudo",
+                        "1 dia de pena seja remido por 18 horas de estudo",
+                        "1 dia de pena seja remido por 6 horas de estudo",
+                        "Não há previsão de remição por estudo"
+                    ],
+                    correctIndex: 0,
+                    explanation: "O art. 126 da LEP, alterado pela Lei 12.433/11, estabelece que o condenado que cumpre pena em regime fechado ou semiaberto poderá remir, por estudo, parte do tempo de execução da pena, na proporção de 1 dia de pena a cada 12 horas de frequência escolar."
+                },
+                {
+                    id: 15,
+                    question: "O trabalho do preso será remunerado mediante prévia tabela, não podendo ser inferior a:",
+                    options: [
+                        "1/4 do salário mínimo",
+                        "1/3 do salário mínimo",
+                        "1/2 do salário mínimo",
+                        "2/3 do salário mínimo",
+                        "3/4 do salário mínimo"
+                    ],
+                    correctIndex: 4,
+                    explanation: "O art. 29 da LEP estabelece que o trabalho do preso será remunerado, mediante prévia tabela, não podendo a remuneração ser inferior a 3/4 (três quartos) do salário mínimo."
+                },
+                {
+                    id: 16,
+                    question: "A jornada normal de trabalho não será inferior a:",
+                    options: [
+                        "4 horas nem superior a 6 horas",
+                        "6 horas nem superior a 8 horas",
+                        "8 horas nem superior a 10 horas",
+                        "5 horas nem superior a 7 horas",
+                        "7 horas nem superior a 9 horas"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 33 da LEP estabelece que a jornada normal de trabalho não será inferior a 6 (seis) nem superior a 8 (oito) horas, com descanso nos domingos e feriados."
+                },
+                {
+                    id: 17,
+                    question: "Os produtos do trabalho penitenciário não poderão concorrer no mercado com os similares produzidos pelos trabalhadores em liberdade, exceto:",
+                    options: [
+                        "Nunca podem concorrer",
+                        "Nas modalidades de venda direta ao consumidor",
+                        "Apenas em feiras especiais",
+                        "Somente para órgãos públicos",
+                        "Em qualquer situação"
+                    ],
+                    correctIndex: 1,
+                    explanation: "O art. 34, § 2º da LEP estabelece que os produtos do trabalho penitenciário não poderão concorrer no mercado com os similares produzidos pelos trabalhadores em liberdade, salvo nas modalidades de venda direta ao consumidor."
+                },
+                {
+                    id: 18,
+                    question: "O produto da remuneração pelo trabalho deverá atender, na seguinte ordem, ao:",
+                    options: [
+                        "Ressarcimento ao Estado, indenização dos danos, sustento da família e constituição do pecúlio",
+                        "Indenização dos danos, ressarcimento ao Estado, sustento da família e constituição do pecúlio",
+                        "Sustento da família, ressarcimento ao Estado, indenização dos danos e constituição do pecúlio",
+                        "Constituição do pecúlio, sustento da família, indenização dos danos e ressarcimento ao Estado",
+                        "Indenização dos danos, sustento da família, ressarcimento ao Estado e constituição do pecúlio"
+                    ],
+                    correctIndex: 4,
+                    explanation: "O art. 29, § 1º da LEP estabelece a seguinte ordem: indenização dos danos causados pelo crime, desde que determinados judicialmente e não reparados por outros meios; assistência à família; pequenas despesas pessoais; ressarcimento ao Estado das despesas realizadas com a manutenção do condenado, em proporção a ser fixada e sem prejuízo da reconstrução de sua vida social."
+                },
+                {
+                    id: 19,
+                    question: "A falta grave está prevista no:",
+                    options: [
+                        "Art. 48",
+                        "Art. 49",
+                        "Art. 50",
+                        "Art. 51",
+                        "Art. 52"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O art. 50 da LEP define as condutas que constituem falta grave, como incitar ou participar de movimento para subverter a ordem ou a disciplina, fugir, possuir, indevidamente, instrumento capaz de ofender a integridade física de outrem, entre outras."
+                },
+                {
+                    id: 20,
+                    question: "A sanção disciplinar de isolamento na própria cela, ou em local adequado, nos estabelecimentos que possuam alojamento coletivo, observado o disposto no artigo 88 desta Lei, por no máximo:",
+                    options: [
+                        "15 dias",
+                        "20 dias",
+                        "30 dias",
+                        "45 dias",
+                        "60 dias"
+                    ],
+                    correctIndex: 2,
+                    explanation: "O art. 53, IV da LEP estabelece que a sanção disciplinar de isolamento na própria cela, ou em local adequado, será por no máximo 30 (trinta) dias, observado o disposto no art. 88 da Lei."
                 }
             ]
         };
@@ -1247,63 +1905,63 @@
 
         // Função para criar simulado geral
         function createGeneralSimulado() {
-            const allQuestions = Object.values(QUESTIONS_BANKS).flat();
+            const allQuestions = [
+                ...QUESTIONS_BANKS.tortura,
+                ...QUESTIONS_BANKS.drogas,
+                ...QUESTIONS_BANKS.desarmamento,
+                ...QUESTIONS_BANKS.abuso_autoridade,
+                ...QUESTIONS_BANKS.execucao_penal
+            ];
             return getRandomQuestions(allQuestions, 50);
         }
 
+        // Configuração dos temas
+        const THEMES = {
+            tortura: {
+                title: "Lei de Tortura",
+                subtitle: "Lei 9.455/97",
+                icon: "fas fa-gavel",
+                description: "Questões sobre os crimes de tortura, penas, qualificadoras e procedimentos."
+            },
+            drogas: {
+                title: "Lei de Drogas",
+                subtitle: "Arts. 28 e 33 - Lei 11.343/06",
+                icon: "fas fa-pills",
+                description: "Questões sobre uso e tráfico de drogas, penas e procedimentos especiais."
+            },
+            desarmamento: {
+                title: "Estatuto do Desarmamento",
+                subtitle: "Arts. 12 a 18 - Lei 10.826/03",
+                icon: "fas fa-ban",
+                description: "Questões sobre posse, porte, comércio de armas e munições."
+            },
+            abuso_autoridade: {
+                title: "Lei de Abuso de Autoridade",
+                subtitle: "Arts. 1º a 5º - Lei 13.869/19",
+                icon: "fas fa-balance-scale",
+                description: "Questões sobre crimes de abuso de autoridade e suas penalidades."
+            },
+            execucao_penal: {
+                title: "Lei de Execução Penal",
+                subtitle: "Arts. 10 a 27, 38 a 54, 110 a 119",
+                icon: "fas fa-building",
+                description: "Questões sobre assistência ao preso, trabalho, disciplina e regime penitenciário."
+            },
+            simulado: {
+                title: "Simulado Geral",
+                subtitle: "50 questões mistas",
+                icon: "fas fa-clipboard-check",
+                description: "Simulado completo com questões de todos os temas (50 questões)."
+            }
+        };
+
         function QuizApp() {
-            const [currentScreen, setCurrentScreen] = React.useState('menu');
+            const [currentScreen, setCurrentScreen] = React.useState('menu'); // menu, quiz, results
             const [selectedTheme, setSelectedTheme] = React.useState(null);
             const [questions, setQuestions] = React.useState([]);
             const [currentIndex, setCurrentIndex] = React.useState(0);
             const [answers, setAnswers] = React.useState({});
             const [score, setScore] = React.useState(0);
-            const [progress, setProgress] = React.useState(loadProgress());
-            const [questionHistory, setQuestionHistory] = React.useState({});
-            const [user, setUser] = React.useState(null);
-            const [authMode, setAuthMode] = React.useState('login');
-            const [authError, setAuthError] = React.useState('');
-            const [email, setEmail] = React.useState('');
-            const [password, setPassword] = React.useState('');
-
-            // Firebase Auth State
-            React.useEffect(() => {
-                if (window.firebaseAuth && window.firebaseAuthStateChanged) {
-                    window.firebaseAuthStateChanged(window.firebaseAuth, (user) => {
-                        setUser(user);
-                    });
-                }
-            }, []);
-
-            // Salvar progresso sempre que mudar
-            React.useEffect(() => {
-                saveProgress(progress);
-            }, [progress]);
-
-            const handleAuth = async (e) => {
-                e.preventDefault();
-                setAuthError('');
-                
-                try {
-                    if (authMode === 'login') {
-                        await window.firebaseSignIn(window.firebaseAuth, email, password);
-                    } else {
-                        await window.firebaseSignUp(window.firebaseAuth, email, password);
-                    }
-                    setEmail('');
-                    setPassword('');
-                } catch (error) {
-                    setAuthError(error.message);
-                }
-            };
-
-            const handleLogout = async () => {
-                try {
-                    await window.firebaseSignOut(window.firebaseAuth);
-                } catch (error) {
-                    console.error('Erro ao fazer logout:', error);
-                }
-            };
 
             const startQuiz = (themeKey) => {
                 let selectedQuestions;
@@ -1318,7 +1976,6 @@
                 setQuestions(selectedQuestions);
                 setCurrentIndex(0);
                 setAnswers({});
-                setQuestionHistory({});
                 setCurrentScreen('quiz');
             };
 
@@ -1329,49 +1986,7 @@
                 });
             };
 
-            const updateProgress = (themeKey, isCorrect) => {
-                if (themeKey === 'simulado') return;
-
-                const questionId = questions[currentIndex].id;
-                const historyKey = `${themeKey}_${questionId}`;
-                
-                const newHistory = {...questionHistory};
-                if (!newHistory[historyKey]) {
-                    newHistory[historyKey] = { correct: 0, incorrect: 0 };
-                }
-
-                if (isCorrect) {
-                    newHistory[historyKey].correct += 1;
-                    // Ganhar 1 ponto após 2 acertos consecutivos
-                    if (newHistory[historyKey].correct >= 2) {
-                        const newProgress = {...progress};
-                        if (!newProgress.themes[themeKey]) {
-                            newProgress.themes[themeKey] = 0;
-                        }
-                        newProgress.themes[themeKey] += 1;
-                        newProgress.totalPoints += 1;
-                        setProgress(newProgress);
-                        newHistory[historyKey].correct = 0; // Reset
-                    }
-                } else {
-                    newHistory[historyKey].incorrect += 1;
-                    // Perder 1 ponto ao errar
-                    const newProgress = {...progress};
-                    if (newProgress.themes[themeKey] > 0) {
-                        newProgress.themes[themeKey] -= 1;
-                        newProgress.totalPoints -= 1;
-                        setProgress(newProgress);
-                    }
-                    newHistory[historyKey].correct = 0; // Reset acertos
-                }
-
-                setQuestionHistory(newHistory);
-            };
-
             const handleNext = () => {
-                const isCorrect = answers[currentIndex] === questions[currentIndex].correctIndex;
-                updateProgress(selectedTheme, isCorrect);
-
                 if (currentIndex < questions.length - 1) {
                     setCurrentIndex(currentIndex + 1);
                 } else {
@@ -1409,191 +2024,34 @@
                 setScore(0);
             };
 
-            const calculateThemeProgress = (themeKey) => {
-                const themePoints = progress.themes[themeKey] || 0;
-                const themeWeight = THEMES_CONFIG[themeKey].weight;
-                return Math.min((themePoints / themeWeight) * 100, 100);
-            };
-
-            const calculateMainProgress = () => {
-                return Math.min((progress.totalPoints / TOTAL_POINTS_NEEDED) * 100, 100);
-            };
-
-            // Tela de Login/Registro
-            if (!user) {
-                return (
-                    <div className="container">
-                        <div className="header">
-                            <div className="header-content">
-                                <div className="site-name">Quiz Preparatório</div>
-                                <h1><i className="fas fa-graduation-cap"></i> Polícia Penal MG</h1>
-                                <p>Rumo à PMMG!</p>
-                            </div>
-                        </div>
-                        
-                        <div className="content">
-                            <form className="auth-form" onSubmit={handleAuth}>
-                                <h2>{authMode === 'login' ? 'Fazer Login' : 'Criar Conta'}</h2>
-                                
-                                {authError && (
-                                    <div className="error-message">{authError}</div>
-                                )}
-                                
-                                <div className="form-group">
-                                    <label>Email:</label>
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                
-                                <div className="form-group">
-                                    <label>Senha:</label>
-                                    <input
-                                        type="password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                
-                                <button type="submit" className="form-submit">
-                                    {authMode === 'login' ? 'Entrar' : 'Registrar'}
-                                </button>
-                                
-                                <div className="form-toggle">
-                                    {authMode === 'login' ? (
-                                        <p>Não tem conta? <button type="button" onClick={() => setAuthMode('register')}>Registrar-se</button></p>
-                                    ) : (
-                                        <p>Já tem conta? <button type="button" onClick={() => setAuthMode('login')}>Fazer Login</button></p>
-                                    )}
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                );
-            }
-
             // Tela do Menu Principal
             if (currentScreen === 'menu') {
-                const mainProgressPercent = calculateMainProgress();
-                
                 return (
                     <div className="container">
                         <div className="header">
                             <div className="header-content">
-                                <div className="site-name">Quiz Preparatório</div>
-                                <h1><i className="fas fa-graduation-cap"></i> Polícia Penal MG</h1>
-                                <p>Rumo à PMMG!</p>
+                                <div className="institute-name">Instituto Oliver</div>
+                                <h1><i className="fas fa-graduation-cap"></i> Quiz Concursos</h1>
+                                <p>Escola Preparatória - Carreiras Policiais</p>
                             </div>
                         </div>
                         
                         <div className="content">
-                            {/* Menu Superior */}
-                            <div className="top-menu">
-                                <div className="developer-section">
-                                    <img src="./developer-photo.jpg" alt="Desenvolvedor" className="developer-photo" />
-                                    <div className="developer-info">
-                                        <h3>Desenvolvedor</h3>
-                                        <p>Rumo à PMMG!</p>
-                                    </div>
-                                </div>
-                                
-                                <div className="auth-buttons">
-                                    <div className="user-info">
-                                        <i className="fas fa-user"></i>
-                                        {user?.email}
-                                    </div>
-                                    <button className="auth-btn secondary" onClick={handleLogout}>
-                                        <i className="fas fa-sign-out-alt"></i>
-                                        Sair
-                                    </button>
-                                </div>
-                            </div>
-
-                            {/* Sistema de Progressão */}
-                            <div className="progress-system">
-                                <div className="main-progress">
-                                    <div className="progress-header">
-                                        <div className="progress-title">
-                                            <i className="fas fa-trophy"></i>
-                                            Progresso Geral - Polícia Penal MG
-                                        </div>
-                                        <div className="progress-stats">
-                                            <div className="stat-item">
-                                                <div className="stat-value">{progress.totalPoints}</div>
-                                                <div className="stat-label">Pontos</div>
-                                            </div>
-                                            <div className="stat-item">
-                                                <div className="stat-value">{Math.round(mainProgressPercent)}%</div>
-                                                <div className="stat-label">Completo</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="progress-bar-container">
-                                        <div className="progress-bar-fill" style={{width: `${mainProgressPercent}%`}}>
-                                            {mainProgressPercent >= 10 && `${Math.round(mainProgressPercent)}%`}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="themes-progress">
-                                    {Object.entries(THEMES_CONFIG).map(([key, theme]) => {
-                                        const themeProgress = calculateThemeProgress(key);
-                                        return (
-                                            <div key={key} className="theme-progress-item">
-                                                <div className="theme-progress-header">
-                                                    <div className="theme-name">
-                                                        <i className={theme.icon}></i> {theme.title}
-                                                    </div>
-                                                    <div className="theme-percentage">{Math.round(themeProgress)}%</div>
-                                                </div>
-                                                <div className="theme-progress-bar">
-                                                    <div className="theme-progress-fill" style={{width: `${themeProgress}%`}}></div>
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-
-                            {/* Menu de Temas */}
                             <div className="menu-grid">
-                                {Object.entries(THEMES_CONFIG).map(([key, theme]) => {
-                                    const themeProgress = calculateThemeProgress(key);
-                                    return (
-                                        <div
-                                            key={key}
-                                            className="menu-card"
-                                            onClick={() => startQuiz(key)}
-                                        >
-                                            <div className="menu-card-icon">
-                                                <i className={theme.icon}></i>
-                                            </div>
-                                            <h3>{theme.title}</h3>
-                                            <p><strong>{theme.subtitle}</strong></p>
-                                            <p>{theme.description}</p>
-                                            <div className="progress-indicator">
-                                                {Math.round(themeProgress)}% Completo
-                                            </div>
+                                {Object.entries(THEMES).map(([key, theme]) => (
+                                    <div
+                                        key={key}
+                                        className={`menu-card ${key === 'simulado' ? 'simulado-card' : ''}`}
+                                        onClick={() => startQuiz(key)}
+                                    >
+                                        <div className="menu-card-icon">
+                                            <i className={theme.icon}></i>
                                         </div>
-                                    );
-                                })}
-                                
-                                {/* Simulado Geral */}
-                                <div
-                                    className="menu-card simulado-card"
-                                    onClick={() => startQuiz('simulado')}
-                                >
-                                    <div className="menu-card-icon">
-                                        <i className="fas fa-clipboard-check"></i>
+                                        <h3>{theme.title}</h3>
+                                        <p><strong>{theme.subtitle}</strong></p>
+                                        <p>{theme.description}</p>
                                     </div>
-                                    <h3>Simulado Geral Polícia Penal MG</h3>
-                                    <p><strong>50 questões mistas</strong></p>
-                                    <p>Simulado completo com 70% de aprovação mínima</p>
-                                </div>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -1614,17 +2072,15 @@
                 }
 
                 const currentQuestion = questions[currentIndex];
-                const quizProgress = ((currentIndex + 1) / questions.length) * 100;
+                const progress = ((currentIndex + 1) / questions.length) * 100;
                 const letters = ['A', 'B', 'C', 'D', 'E'];
-                const theme = selectedTheme === 'simulado' ? 
-                    { title: 'Simulado Geral Polícia Penal MG', subtitle: '50 questões mistas', icon: 'fas fa-clipboard-check' } : 
-                    THEMES_CONFIG[selectedTheme];
+                const theme = THEMES[selectedTheme];
 
                 return (
                     <div className="container">
                         <div className="header">
                             <div className="header-content">
-                                <div className="site-name">Quiz Preparatório</div>
+                                <div className="institute-name">Instituto Oliver</div>
                                 <h1><i className={theme.icon}></i> {theme.title}</h1>
                                 <p>{theme.subtitle}</p>
                             </div>
@@ -1643,11 +2099,11 @@
                                             <i className="fas fa-question-circle"></i> Questão {currentIndex + 1} de {questions.length}
                                         </span>
                                         <span style={{color: 'var(--text-secondary)'}}>
-                                            {Math.round(quizProgress)}% concluído
+                                            {Math.round(progress)}% concluído
                                         </span>
                                     </div>
                                     <div className="progress-bar">
-                                        <div className="progress-fill" style={{width: `${quizProgress}%`}}></div>
+                                        <div className="progress-fill" style={{width: `${progress}%`}}></div>
                                     </div>
                                 </div>
 
@@ -1716,17 +2172,14 @@
                     return 'poor';
                 };
 
-                const isApproved = selectedTheme === 'simulado' && percentage >= 70;
-                const theme = selectedTheme === 'simulado' ? 
-                    { title: 'Simulado Geral Polícia Penal MG', subtitle: '50 questões mistas', icon: 'fas fa-clipboard-check' } : 
-                    THEMES_CONFIG[selectedTheme];
+                const theme = THEMES[selectedTheme];
                 const letters = ['A', 'B', 'C', 'D', 'E'];
 
                 return (
                     <div className="container">
                         <div className="header">
                             <div className="header-content">
-                                <div className="site-name">Quiz Preparatório</div>
+                                <div className="institute-name">Instituto Oliver</div>
                                 <h1><i className="fas fa-trophy"></i> Resultado Final</h1>
                                 <p>{theme.title} - {theme.subtitle}</p>
                             </div>
@@ -1735,11 +2188,6 @@
                         <div className="content">
                             <div className="quiz-container">
                                 <div className="results-container">
-                                    {isApproved && (
-                                        <div className="approval-message">
-                                            ✓ APROVADO
-                                        </div>
-                                    )}
                                     <div className={`score-display ${getScoreClass()}`}>
                                         {score}/{questions.length}
                                     </div>
